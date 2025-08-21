@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .navbar {
+        height: 20vh;
+        display: flex;
+        align-items: center;
+        padding: 10px 0px;
+        background-color: #333;
+        color: white;
+      }
+
+      .navbar .logo {
+        height: 100%;
+        margin: 0px 20px;
+      }
+
+      .navbar .logo img {
+        height: 100%;
+        width: auto;
+        padding: 4px;
+        object-fit: cover;
+      }
+      .navbar .title {
+        width: 100%;
+        text-align: center;
+      }
+      .navbar .title h1 {
+        font-size: 2rem;
+      }
+      .navbar .title p {
+        color: whitesmoke;
+      }
+      @media (width < 800px) {
+        .navbar .title h1 {
+          font-size: 4vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="/asset/image copy.png" />
+      </div>
+      <div class="title">
+        <h1>Kalyani Government Engineering College</h1>
+        <p>Kalyani, West Bengal, India</p>
+      </div>
+    </nav>
+  </body>
+</html>
