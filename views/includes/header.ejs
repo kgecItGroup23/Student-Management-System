@@ -1,43 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/landinPage/signin">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+      integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/css/include/header.css" />
     <title>Document</title>
-</head>
-<body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="http://localhost:5000/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="http://localhost:5000/courses">Courses</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="http://localhost:5000/info">Info</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="http://localhost:5000/notices">Notices</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="http://localhost:5000/signin">Sign in</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" href="http://localhost:5000/signup">Sign Up</a>
-        </li>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --color1: #333;
+        --color2: #ba8254;
+        --color3: #ffbf00;
+      }
+      .navbar2 {
+        height: 10vh;
+        background-color: var(--color2);
+        z-index: 99;
+      }
+      .nav-links {
+        height: 100%;
+        padding-left: 20px;
+        display: flex;
+        align-items: center;
+        list-style: none;
+        gap: 20px;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--color1);
+        transition: color 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--color3);
+      }
+
+      /* Hamburger menu (hidden by default) */
+      .hamburger {
+        height: 100%;
+        width: 50px;
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 5px;
+      }
+
+      .hamburger i {
+        font-size: 30px;
+      }
+
+      .side-nav-bar {
+        height: 70vh;
+        width: 0;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--color2);
+        overflow: hidden;
+        box-shadow: 4px 6px 10px rgba(0, 0, 0, 0.5);
+        transition: 0.5s ease-in-out;
+        z-index: 98;
+      }
+
+      .side-nav-bar li {
+        width: 150px;
+        padding-left: 0.75rem;
+
+        list-style: none;
+        font-size: 17px;
+      }
+
+      .side-nav-bar li:hover {
+        background-color: var(--color2);
+      }
+
+      .side-nav-bar li a {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        text-decoration: none;
+        color: var(--color1);
+      }
+
+      .side-nav-bar li a:hover {
+        color: var(--color3);
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 60px;
+          right: 20px;
+          flex-direction: column;
+          background-color: var(--color1);
+          padding: 15px;
+          border-radius: 5px;
+          gap: 15px;
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        .hamburger {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar2">
+      <ul class="nav-links">
+        <li><a href="http://localhost:5000/">Home</a></li>
+        <li><a href="http://localhost:5000/courses">Courses</a></li>
+        <li><a href="http://localhost:5000/info">Info</a></li>
+        <li><a href="http://localhost:5000/notices">Notice</a></li>
+        <li><a href="http://localhost:5000/signin">Sign In</a></li>
+        <li><a href="http://localhost:5000/signup">Sign Up</a></li>
       </ul>
-    </div>
-  </div>
-</nav>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-</body>
+
+      <!-- Hamburger for mobile -->
+      <div class="hamburger">
+        <i class="fa-solid fa-bars"></i>
+      </div>
+
+      <ul class="side-nav-bar">
+        <li><a href="http://localhost:5000/">Home</a></li>
+        <li><a href="http://localhost:5000/courses">Courses</a></li>
+        <li><a href="http://localhost:5000/info">Info</a></li>
+        <li><a href="http://localhost:5000/notices">Notice</a></li>
+        <li><a href="http://localhost:5000/signin">Sign In</a></li>
+        <li><a href="http://localhost:5000/signup">Sign Up</a></li>
+      </ul>
+    </nav>
+
+    <script>
+      let sideNav = false;
+      document.querySelector(".hamburger").addEventListener("click", function (e) {
+        if(sideNav) {
+          document.querySelector(".side-nav-bar").style.width = "0";
+          sideNav = false;
+        }
+        else{
+          document.querySelector(".side-nav-bar").style.width = "200px";
+          sideNav = true;
+        }
+      });
+    </script>
+  </body>
 </html>
