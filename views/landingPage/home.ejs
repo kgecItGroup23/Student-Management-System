@@ -1,15 +1,371 @@
-<%- include('../includes/header0') %>
+<%- include('../includes/header0') %> 
 <%- include('../includes/header') %>
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
-</head>
-<body>
-    <!-- <h1>hiiiiiiii</h1> -->
-</body>
-</html>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .hero {
+        width: 100vw;
+        height: 77vh;
+        position: absolute;
+        top: 23vh;
+        overflow: hidden;
+        color: white;
+      }
 
+      .hero .list {
+        position: absolute;
+        inset: 0 0 0 0;
+      }
+
+      .hero .list img {
+        position: absolute;
+        inset: 0 0 0 0;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+        filter: brightness(0.8);
+      }
+
+      .hero .content {
+        position: absolute;
+        top: 20%;
+        left: 10%;
+        width: 1140px;
+        max-width: 80%;
+        text-shadow: 0 3px 7px black;
+        z-index: 1;
+      }
+
+      .hero .content h1 {
+        font-size: 60px;
+        font-weight: 700;
+        color: var(--color-5);
+        animation: slideUp 1s;
+      }
+
+      .hero .content h2 {
+        color: var(--color2);
+        font-size: 32px;
+        margin-top: 10px;
+        opacity: 0;
+        animation: slideUp 1s 0.3s forwards;
+      }
+
+      .hero .content p {
+        color: var(--color-5);
+        line-height: 0.8;
+        font-size: 17px;
+      }
+
+      .hero .content .action {
+        width: fit-content;
+        position: relative;
+        left: 50%;
+        display: flex;
+        gap: 20px;
+        transform: translate(0, -100%);
+      }
+
+      .hero .content .action button {
+        height: 2.5rem;
+        width: 10rem;
+        border-radius: 1.5rem;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+        transition: background-color 300ms, color 300ms;
+      }
+
+      .hero .content .action button a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .hero .content .action #signin {
+        background-color: var(--color3);
+        border: none;
+        color: var(--color1);
+      }
+
+      .hero .content .action #login {
+        background-color: rgba(76, 76, 76, 0.374);
+        border: 2px solid var(--color3);
+        color: var(--color3);
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(70%);
+          opacity: 0;
+          filter: brightness(0.5);
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+          filter: none;
+        }
+      }
+
+      .hero #scrollDown {
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        translate: -50% 0;
+        width: max(5vw, 60px);
+        height: max(5vw, 60px);
+        border-radius: 50%;
+        border: 2px solid white;
+        background-color: rgba(245, 245, 245, 0.374);
+        opacity: 0.8;
+        box-shadow: inset 0px 0px 10px 3px var(--color-5);
+        z-index: 1;
+        font-size: 25px;
+      }
+
+      .arrows {
+        position: absolute;
+        width: 80%;
+        bottom: 5%;
+        left: 50%;
+        translate: -50%;
+        display: flex;
+        justify-content: space-between;
+        z-index: 1;
+      }
+
+      .arrows button {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        border: none;
+        font-size: 25px;
+        color: rgb(255, 255, 255);
+        background-color: rgba(245, 245, 245, 0.349);
+        transition: color 300ms, background-color 300ms;
+      }
+
+      .arrows button:hover {
+        color: rgb(35, 35, 35);
+        background-color: rgba(206, 206, 206, 0.849);
+      }
+
+      .hero .list img:nth-child(1) {
+        z-index: 1;
+      }
+
+      .hero .dots {
+        position: absolute;
+        bottom: 20%;
+        left: 50%;
+        translate: -30%;
+        color: var(--color-5);
+        z-index: 2;
+        display: flex;
+      }
+
+      .hero .dots li {
+        list-style: circle;
+        margin: 0px 7px;
+      }
+
+      .hero .dots .activeDot {
+        list-style-type: disc;
+      }
+      /* ********************************************************** */
+
+      .about {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        top: 100vh;
+        background: #121212;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+      }
+      .card {
+        width: 190px;
+        height: 254px;
+        background: #171717;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0px 0px 3px 1px #00000088;
+        cursor: pointer;
+      }
+
+      .card .content {
+        border-radius: 5px;
+        background: #171717;
+        width: 186px;
+        height: 250px;
+        z-index: 1;
+        padding: 20px;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .content::before {
+        opacity: 0;
+        transition: opacity 300ms;
+        content: " ";
+        display: block;
+        background: white;
+        width: 5px;
+        height: 50px;
+        position: absolute;
+        filter: blur(50px);
+        overflow: hidden;
+      }
+
+      .card:hover .content::before {
+        opacity: 1;
+      }
+
+      .card::before {
+        opacity: 0;
+        content: " ";
+        position: absolute;
+        display: block;
+        width: 80px;
+        height: 360px;
+        background: linear-gradient(#ff2288, #387ef0);
+        transition: opacity 300ms;
+        animation: rotation_9018 8000ms infinite linear;
+        animation-play-state: paused;
+      }
+
+      .card:hover::before {
+        opacity: 1;
+        animation-play-state: running;
+      }
+
+      .card::after {
+        position: absolute;
+        content: " ";
+        display: block;
+        width: 250px;
+        height: 360px;
+        background: #17171733;
+        backdrop-filter: blur(50px);
+      }
+
+      @keyframes rotation_9018 {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <div class="list">
+          <img src="/asset/image copy 2.png" alt="" />
+          <img src="/asset/image copy 3.png" alt="" />
+          <img src="/asset/image copy 4.png" alt="" />
+          <img src="/asset/image copy 5.png" alt="" />
+        </div>
+        <div class="content">
+          <h1>KGEC Student Management System</h1>
+          <h2>All your academics at one place</h2>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint,
+            praesentium.
+          </p>
+          <div class="action">
+            <button type="button" id="signin"><a href="http://localhost:5000/signin">Sign In</a></button>
+            <button type="button" id="login"><a href="http://localhost:5000/signup">Log in</a></button>
+          </div>
+        </div>
+        <button title="scrollDown" type="button" id="scrollDown">
+          <i class="fa-solid fa-arrow-down"></i>
+        </button>
+        <ul class="dots">
+          <li class="activeDot"></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+        <div class="arrows">
+          <button type="button" id="prev"><</button>
+          <button type="button" id="next">></button>
+        </div>
+      </section>
+
+      <section class="about">
+        <div class="card" id="card">
+          <div class="content">
+            <span>HOVER ME</span>
+          </div>
+        </div>
+        <div class="card" id="card">
+          <div class="content">
+            <span>HOVER ME</span>
+          </div>
+        </div>
+        <div class="card" id="card">
+          <div class="content">
+            <span>HOVER ME</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const list = document.querySelector(".list");
+      const dots = document.querySelector(".dots");
+      let currItem = 0;
+      let slideTimeOutId;
+
+      slideTimeOutId = setTimeout(() => {
+        slideNext();
+      }, 5000);
+
+      document.querySelector("#next").addEventListener("click", function () {
+        slideNext();
+      });
+      document.querySelector("#prev").addEventListener("click", function () {
+        slideNext("prev");
+      });
+
+      function slideNext(type) {
+        clearTimeout(slideTimeOutId);
+        dots.children[currItem].classList.remove("activeDot");
+        if (type === "prev") {
+          list.prepend(list.children[list.children.length - 1]);
+          currItem =
+            (currItem + list.children.length - 1) % list.children.length;
+        } else {
+          list.appendChild(list.children[0]);
+          currItem = (currItem + 1) % list.children.length;
+        }
+        dots.children[currItem].classList.add("activeDot");
+        slideTimeOutId = setTimeout(() => {
+          slideNext();
+        }, 5000);
+      }
+    </script>
+  </body>
+</html>
