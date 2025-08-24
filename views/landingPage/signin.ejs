@@ -65,13 +65,15 @@
                 height: calc(100% - 4px);
                 z-index: 1;
                 padding: 20px;
-                color: black;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                color: var(--color1);
             }
             .card .content:hover {
                 background-image: radial-gradient(#fff, transparent 95%);            
+            }
+            .card .content i {
+                margin: 2rem;
+                font-size: 5rem;
+                color: var(--color2);
             }
 
             @property --angle {
@@ -121,13 +123,15 @@
                     <!-- From Uiverse.io by ElSombrero2 -->
                     <a href="/student/signin" class="card" id="card">
                         <div class="content">
-                            <span>STUDENT</span>
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <p>STUDENT</p>
                         </div>
                     </a>
                     <!-- From Uiverse.io by ElSombrero2 -->
                     <a href="/student/signin" class="card" id="card">
                         <div class="content">
-                            <span>TEACHER</span>
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                            <p>TEACHER</p>
                         </div>
                     </a>
 

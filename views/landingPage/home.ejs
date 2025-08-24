@@ -14,6 +14,7 @@
         box-sizing: border-box;
       }
       .hero {
+        /* padding: 10%; */
         width: 100vw;
         height: 77vh;
         position: absolute;
@@ -38,43 +39,48 @@
       }
 
       .hero .content {
+        width: 100%;
         position: absolute;
-        top: 20%;
-        left: 10%;
-        width: 1140px;
-        max-width: 80%;
+        top: 15%;
+        padding: 10px;
+        padding-left: 10%;
         text-shadow: 0 3px 7px black;
+        background-color: #2d263730;
+        backdrop-filter: blur(3px);
         z-index: 1;
       }
 
       .hero .content h1 {
         font-size: 60px;
         font-weight: 700;
-        color: var(--color-5);
+        color: white;
         animation: slideUp 1s;
       }
 
       .hero .content h2 {
-        color: var(--color2);
+        color: #cec9c0;
         font-size: 32px;
+        font-weight: 400;
         margin-top: 10px;
         opacity: 0;
         animation: slideUp 1s 0.3s forwards;
       }
 
       .hero .content p {
+        /* display: none; */
         color: var(--color-5);
         line-height: 0.8;
         font-size: 17px;
       }
 
       .hero .content .action {
+        margin: 10px 50px;
         width: fit-content;
-        position: relative;
-        left: 50%;
+        /* position: relative;
+        left: 50%; */
         display: flex;
         gap: 20px;
-        transform: translate(0, -100%);
+        /* transform: translate(-50%, 0); */
       }
 
       .hero .content .action button {
@@ -295,8 +301,8 @@
             praesentium.
           </p>
           <div class="action">
-            <button type="button" id="signin"><a href="http://localhost:5000/signin">Sign In</a></button>
-            <button type="button" id="login"><a href="http://localhost:5000/signup">Log in</a></button>
+            <a href="http://localhost:5000/signin"><button type="button" id="signin">Sign In</button></a>
+            <a href="http://localhost:5000/signup"><button type="button" id="login">Log in</button></a>
           </div>
         </div>
         <button title="scrollDown" type="button" id="scrollDown">

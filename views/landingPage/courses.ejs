@@ -1,1 +1,101 @@
-<%- include('../includes/header') %>
+<%- include('../includes/header0') %>
+    <%- include('../includes/header') %>
+
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Courses</title>
+            <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                }
+
+                .courses {
+                    position: relative;
+                    top: 30vh;
+                    display: flex;
+                    justify-content: space-evenly;
+                    /* align-items: flex-start; */
+                    height: 77vh;
+                }
+
+                .courses .card {
+                    width: 25vw;
+                    height: 4rem;
+                    box-shadow: 0px 0px 5px 1px var(--color5);
+                    border-radius: 10px;
+                    text-align: center;
+                    background-color: var(--color4);
+                    transition: height 0.8s ease-in-out;
+                    overflow: hidden;
+                }
+
+                .courses .card h1 {
+                    height: 4rem;
+                    padding: 15px 0;
+                    border-radius: 10px;
+                    background-color: var(--color3);
+                    color: var(--color1);
+                    box-shadow: 0px 0px 5px 1px var(--color1);
+                }
+
+                .courses .card p {
+                    /* height: 0; */
+                    padding: 20px;
+                    text-align: justify;
+                    color: var(--color1);
+                    /* overflow: hidden; */
+                }
+
+                .courses .card .active {
+                    height: fit-content;
+                }
+            </style>
+        </head>
+
+        <body>
+            <div class="courses">
+                <div class="card">
+                    <h1>B.TECH</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem odio ab optio tempore quis sit
+                        aliquam voluptate cum, autem dicta, officiis amet? Pariatur vel nulla, animi debitis quidem
+                        exercitationem? Et quis incidunt dicta quae doloribus quasi fugiat reprehenderit exercitationem,
+                        architecto pariatur quos impedit, commodi maiores animi deserunt, ullam vel quia!</p>
+                </div>
+                <div class="card">
+                    <h1>M.TECH</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe reiciendis accusamus nemo nulla
+                        ducimus et voluptates ad esse adipisci libero blanditiis perferendis asperiores, consectetur
+                        voluptas tempore molestiae repellat excepturi quis veniam placeat corrupti. Veniam architecto
+                        ipsum, incidunt rem alias omnis beatae atque laudantium sequi tempora vitae. Illum magni beatae
+                        odit.</p>
+                </div>
+                <div class="card">
+                    <h1>MCA</h1>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum exercitationem consequuntur
+                        architecto unde neque tempore, non dolorem eveniet perferendis sequi, illo ducimus natus
+                        molestiae quaerat harum temporibus quasi a. Officiis quam delectus ratione impedit repellendus
+                        inventore dolor, quaerat itaque assumenda commodi maiores repellat blanditiis, sit, facilis
+                        vitae nam harum. Dignissimos.</p>
+                </div>
+            </div>
+
+            <script>
+                const cards = document.querySelectorAll(".card");
+
+                cards.forEach(card => {
+                    card.addEventListener("click", () => {
+                        // card.classList.toggle("active");
+                        if(card.style.height != "65vh") card.style.height = "65vh"
+                        else card.style.height = "4rem";
+
+                    });
+                });
+            </script>
+        </body>
+
+        </html>
