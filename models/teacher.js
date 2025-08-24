@@ -13,6 +13,24 @@ let teacherSchema = new mongoose.Schema({
         type :String,
         maxLength : 50,
     },
+    highestQualification :{
+        type : String,
+    },
+    position : {
+        type : String,
+    },
+    gmail : {
+        type :String,
+    },
+    mobilenum : {
+        type : Number,
+    },
+    department : {
+        type : String,
+    },
+    birthdate : {
+        type : Date,
+    },
     
 });
     

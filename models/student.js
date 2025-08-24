@@ -25,14 +25,32 @@ let studentSchema = new mongoose.Schema({
         type :String,
         required : true,
     },
-    fatherName : {
+    fathername : {
         type :String,
        required : true,
     },
-    motherName : {
-    type :String,
+    mothername : {
+        type :String,
        required : true,
+    },
+    mobilenum : {
+        type : Number,
+        required : true,
+    },
+    department : {
+        type : String,
+        required : true,
+    },
+    rollno : {
+        type : Number,
+        required : true,
+        unique : true,
+    },
+    birthdate : {
+        type : Date,
+        required : true, 
     }
+
     
 });
     

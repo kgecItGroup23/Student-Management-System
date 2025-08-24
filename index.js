@@ -68,6 +68,8 @@ app.get("/student/signin", (req,res) => {
 app.get("/teacher/signin", (req,res) => {
     res.render("signinPage/teacherlogin");
 })
+
+// Student Authentication
 app.post("/student", async (req, res) => {
   let { username, password } = req.body;
 
@@ -77,12 +79,24 @@ app.post("/student", async (req, res) => {
     return res.redirect("/");
   }
   req.session.info = {
-    id: user._id,
+    id : user._id,
     fullname: user.fullname,
+    rollno : user.rollno,
+    address : user.address,
+    year : user.year,
+    course : user.course,
+    gmail : user.gmail,
+    fathername : user.fathername,
+    mothername :user.mothername,
+    birthdate : user.birthdate,
+    department : user.department,
+    mobilenum : user.mobilenum,
   };
 
   res.render("student/home", { info: req.session.info });
 });
+
+// Teacher Authentication
 app.post("/teacher", async (req, res) => {
   let { username, password } = req.body;
   const user = await Teacher.findOne({ fullname: username, password });
@@ -92,6 +106,7 @@ app.post("/teacher", async (req, res) => {
   req.session.info = {
     id: user._id,
     fullname: user.fullname,
+    
   };
 
   res.render("teacher/home", { info: req.session.info });
