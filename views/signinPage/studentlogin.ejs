@@ -1,1 +1,12 @@
 <%- include('../includes/Student_Teacher/signin.ejs') %> 
+<body>
+    <div class="container">
+        <form action="/student" method="post">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username">
+            <label for="password">Password</label>
+            <input id="password" name="password">
+            <button>Submit</button>
+        </form>
+    </div>
+</body>

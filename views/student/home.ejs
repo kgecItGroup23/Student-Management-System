@@ -1,11 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/student/home.css">
 </head>
-<body>
-    <p>Name : <%= info.username %></p>
-</body>
+<%- include('../includes/header0') %>
+
+    <body>
+        <div class="home">
+            <%- include('../includes/student/navbar') %>
+                <div class="outer">
+                    <div class="options">
+                        <div class="inner" id="first">
+
+                            <a href="/student/notices">
+                                <div class="op"><i class="fa-solid fa-bell"></i>Notices</div>
+                            </a>
+
+                            <a href="/student/routine">
+                                <div class="op"><i class="fa-solid fa-clipboard-list"></i>Routine</div>
+                            </a>
+
+                            <a href="/student/assignment">
+                                <div class="op"><i class="fa-solid fa-list"></i>Assignment</div>
+                            </a>
+
+                        </div>
+                        <div class="inner" id="second">
+
+                            <a href="/student/marks">
+                                <div class="op"><i class="fa-solid fa-square-poll-vertical"></i>Result</div>
+                            </a>
+
+                            <a href="/student/fees">
+                                <div class="op"><i class="fa-solid fa-indian-rupee-sign"></i>Fees</div>
+                            </a>
+
+                            <a href="/student/syllabus">
+                                <div class="op"><i class="fa-solid fa-book"></i>Syllabus</div>
+                            </a>
+
+                        </div>
+                        <div class="inner" id="third">
+
+                            <a href="/student/papers">
+                                <div class="op"><i class="fa-solid fa-file-pen"></i>Papers</div>
+                            </a>
+
+                            <a href="/student/mentor">
+                                <div class="op"><i class="fa-solid fa-user-tie"></i></i>Mentor</div>
+                            </a>
+
+                            <a href="/student/infoupdate">
+                                <div class="op"><i class="fa-solid fa-circle-info"></i>Update Info</div>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div class="details">
+                        <h2>Student Basic Details</h2>
+                        <ul class="listdetail">
+                            <li>Name : <%=info.fullname %>
+                            </li>
+                            <li>Rollno : <%=info.rollno %>
+                            </li>
+                            <li>Address : <%=info.address %>
+                            </li>
+                            <li>Year : <%=info.year %>
+                            </li>
+                            <li>Course : <%=info.course %>
+                            </li>
+                            <li>Gmail : <%=info.gmail %>
+                            </li>
+                            <li>Father Name :<%=info.fathername %>
+                            </li>
+                            <li>Mother Name : <%=info.mothername %>
+                            </li>
+                            <li>D.O.B : <%=info.birthdate%>
+                            </li>
+                            <li>Department : <%=info.department %>
+                            </li>
+                            <li>Mobile Number : <%=info.mobilenum %>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+    </body>
+
 </html>
