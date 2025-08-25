@@ -14,16 +14,7 @@
 
 <body>
         <div class="home">
-            <nav><span id="user">
-                    <div class="icon"><i class="fa-solid fa-user"></i></div>
-                    <p>
-                        <%= info.fullname %>
-                    </p>
-                    <a href="/">
-                        <i id="logout" class="fa-solid fa-arrow-right-from-bracket"></i>
-                    </a>
-                </span>
-            </nav>
+            <%- include('../includes/student/navbar') %>
             <div class="outer">
                 <div class="options">
                     <div class="inner" id="first">
