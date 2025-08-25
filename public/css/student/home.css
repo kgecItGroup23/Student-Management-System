@@ -22,7 +22,7 @@
 }
 .home{
     position: relative;
-    top: 9.124rem;
+    top: 6.85rem;
 }
 
 .options {
@@ -133,10 +133,7 @@ nav {
     padding-left: 1.7rem;
 }
 
-#logout{
-    position: relative;
-    left: 3.5rem;
-}
+
 
 .inner a:hover {
     background-color: #d9cfcf96;

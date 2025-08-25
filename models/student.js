@@ -47,7 +47,7 @@ let studentSchema = new mongoose.Schema({
         unique : true,
     },
     birthdate : {
-        type : Date,
+        type : String,
         required : true, 
     }
 

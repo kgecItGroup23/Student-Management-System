@@ -69,6 +69,20 @@ app.get("/teacher/signin", (req,res) => {
     res.render("signinPage/teacherlogin");
 })
 
+//signup page
+app.post("/student/signup", async(req,res) => {
+  let {fullname,rollno,address,year,course,department,mothername,fathername,gmail,mobilenum,birthdate,password} = req.body;
+  try{
+    await Student.insertOne({fullname,rollno,address,year,course,department,mothername,fathername,gmail,mobilenum,birthdate,password});
+    res.render("landingPage/signinsucessful.ejs");
+  }
+  catch(err){
+    console.log(err);
+    res.render("landingPage/errorpage.ejs");
+  }
+})
+
+
 // Student Authentication
 app.post("/student", async (req, res) => {
   let { username, password } = req.body;
@@ -111,6 +125,7 @@ app.post("/teacher", async (req, res) => {
 
   res.render("teacher/home", { info: req.session.info });
 });
+
 
 app.listen(port, () => {
     console.log("Server is created");

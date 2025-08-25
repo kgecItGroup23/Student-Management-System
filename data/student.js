@@ -21,7 +21,7 @@ const allStudent = [
     fathername: "Rajesh Sharma",
     mothername: "Sunita Sharma",
     mobilenum: 9876543210,
-    // birthdate: new Date("2004-03-12"),
+    birthdate: new Date("2004-03-12").toLocaleDateString("en-GB"),
     department: "IT"
   },
   {
@@ -35,7 +35,7 @@ const allStudent = [
     fathername: "Anil Verma",
     mothername: "Rekha Verma",
     mobilenum: 9876504321,
-    // birthdate: new Date("2005-07-18"),
+    birthdate: new Date("2005-07-18").toLocaleDateString("en-GB"),
     department: "CSE"
   },
   {
@@ -49,7 +49,7 @@ const allStudent = [
     fathername: "Suresh Das",
     mothername: "Anita Das",
     mobilenum: 9831209876,
-    // birthdate: new Date("2006-01-25"),
+    birthdate: new Date("2006-01-25").toLocaleDateString("en-GB"),
     department: "ECE"
   },
   {
@@ -63,7 +63,7 @@ const allStudent = [
     fathername: "Pradip Mukherjee",
     mothername: "Aloka Mukherjee",
     mobilenum: 9800012345,
-    // birthdate: new Date("2003-11-05"),
+    birthdate: new Date("2003-11-05").toLocaleDateString("en-GB"),
     department: "ME"
   },
   {
@@ -77,7 +77,7 @@ const allStudent = [
     fathername: "Manoj Singh",
     mothername: "Pooja Singh",
     mobilenum: 9812345678,
-    // birthdate: new Date("2004-05-22"),
+    birthdate: new Date("2004-05-22").toLocaleDateString("en-GB"),
     department: "CIVIL"
   },
   {
@@ -91,7 +91,7 @@ const allStudent = [
     fathername: "Ramesh Gupta",
     mothername: "Shalini Gupta",
     mobilenum: 9876001111,
-    // birthdate: new Date("2005-08-10"),
+    birthdate: new Date("2005-08-10").toLocaleDateString("en-GB"),
     department: "EE"
   },
   {
@@ -105,7 +105,7 @@ const allStudent = [
     fathername: "Sanjay Mehta",
     mothername: "Deepa Mehta",
     mobilenum: 9898123456,
-    // birthdate: new Date("2006-02-14"),
+    birthdate: new Date("2006-02-14").toLocaleDateString("en-GB"),
     department: "IT"
   },
   {
@@ -119,7 +119,7 @@ const allStudent = [
     fathername: "Amit Roy",
     mothername: "Ritu Roy",
     mobilenum: 9811122233,
-    // birthdate: new Date("2003-09-30"),
+    birthdate: new Date("2003-09-30").toLocaleDateString("en-GB"),
     department: "CSE"
   },
   {
@@ -133,7 +133,7 @@ const allStudent = [
     fathername: "Hari Nair",
     mothername: "Lakshmi Nair",
     mobilenum: 9822004455,
-    // birthdate: new Date("2005-12-19"),
+    birthdate: new Date("2005-12-19").toLocaleDateString("en-GB"),
     department: "ECE"
   },
   {
@@ -147,7 +147,7 @@ const allStudent = [
     fathername: "Subhas Chatterjee",
     mothername: "Leena Chatterjee",
     mobilenum: 9800556677,
-    // birthdate: new Date("2004-04-27"),
+    birthdate: new Date("2004-04-27").toLocaleDateString("en-GB"),
     department: "ME"
   }
 ];

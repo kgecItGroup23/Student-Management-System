@@ -1,0 +1,14 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    
+}
+
+
