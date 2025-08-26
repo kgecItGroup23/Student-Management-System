@@ -1,15 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .mainnotice {
+            padding-top: 9.4rem;
+            padding-left: 1rem;
+        }
+    </style>
 </head>
+
 <body>
     <%- include('../includes/header0') %>
-    <%- include('../includes/student/navbar') %>
-    <div class="home">
-        <%- include('../includes/student/navbar') %>
-    </div>
+        <div class="home">
+            <%- include('../includes/student/navbar') %>
+        </div>
+
+        <div class="mainnotice">
+            <ol>
+                <% notices.forEach((notice)=> { %>
+                    <li>
+                        <a href=<%=notice.url %> download>new notice : <%=notice._id%></a>
+                        <br><br>
+                        <p>
+                            <%= notice.date %>
+                        </p>
+
+                    </li>
+                    <hr>
+                    <% }) %>
+            </ol>
+        </div>
 </body>
+
 </html>
