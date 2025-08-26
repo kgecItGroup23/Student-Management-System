@@ -1,2 +1,23 @@
 <%- include('../includes/header0') %>
 <%- include('../includes/header') %>
+<style>
+    .mainnotice {
+        padding-top: 12rem;
+        padding-left: 1rem;
+    }
+</style>
+<div class="mainnotice">
+    <ol>
+        <% notices.forEach((notice)=> { %>
+            <li>
+                <a href=<%=notice.url %> download>new notice : <%=notice._id%></a>
+                <br><br>
+                <p>
+                    <%= notice.date %>
+                </p>
+
+            </li>
+            <hr>
+            <% }) %>
+    </ol>
+</div>

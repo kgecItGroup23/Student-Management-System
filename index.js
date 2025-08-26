@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import methodOverride from "method-override";
 import Teacher from "./models/teacher.js";
 import Student from "./models/student.js";
+import Notice from "./models/notice.js";
 import session from "express-session";
 import bodyParser from "body-parser";
 
@@ -77,8 +78,9 @@ app.get("/courses", (req,res) => {
 app.get("/info", (req,res) => {
     res.render("landingPage/info");
 })
-app.get("/notices", (req,res) => {
-    res.render("landingPage/notices");
+app.get("/notices", async (req,res) => {
+    let notices = await Notice.find().sort({ date: -1 });
+    res.render("landingPage/notices",{notices});
 })
 app.get("/signin", (req,res) => {
     res.render("landingPage/signin");
@@ -156,7 +158,9 @@ app.post("/teacher", async (req, res) => {
 // student
 app.get("/student/:id/notices", async (req,res) => {
   let {id} = req.params;
-  res.render("student/notices.ejs",{info : await getinfoById(Student,req,id)});
+  let info = await getinfoById(Student, req, id);
+  let notices = await Notice.find().sort({ date: -1 });
+  res.render("student/notices.ejs",{info, notices});
   
 })
 
