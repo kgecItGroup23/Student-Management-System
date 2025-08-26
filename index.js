@@ -27,10 +27,6 @@ app.use(session({
   cookie: { secure: process.env.NODE_ENV === 'production', maxAge: 24 * 60 * 60 * 1000 } // 24 hours
 }));
 
-
-
-
-
 main()
 .then(() => 
 console.log("Connectiion Sucessful"))
@@ -42,6 +38,34 @@ async function main() {
 
 
 const port = 5000;
+
+
+const getinfoById = async (Student, req, id) => {
+  try {
+    const user = await Student.findById(id);
+    req.session.info = {
+      id: user._id,
+      fullname: user.fullname,
+      rollno: user.rollno,
+      address: user.address,
+      year: user.year,
+      course: user.course,
+      gmail: user.gmail,
+      fathername: user.fathername,
+      mothername: user.mothername,
+      birthdate: user.birthdate,
+      department: user.department,
+      mobilenum: user.mobilenum,
+    };
+
+    return req.session.info;
+
+  } catch (err) {
+    console.error(err.message);
+    res.render("landingPage/errorpage.ejs");
+  }
+};
+
 
 // Landing Page
 app.get("/", (req,res) => {
@@ -94,6 +118,7 @@ app.post("/student", async (req, res) => {
   if (!user) {
     return res.redirect("/");
   }
+
   req.session.info = {
     id : user._id,
     fullname: user.fullname,
@@ -108,7 +133,7 @@ app.post("/student", async (req, res) => {
     department : user.department,
     mobilenum : user.mobilenum,
   };
-
+  
   res.render("student/home", { info: req.session.info });
 });
 
@@ -129,40 +154,57 @@ app.post("/teacher", async (req, res) => {
 });
 
 // student
-app.get("/student/notices", (req,res) => {
-  res.render("student/notices.ejs",{info});
+app.get("/student/:id/notices", async (req,res) => {
+  let {id} = req.params;
+  res.render("student/notices.ejs",{info : await getinfoById(Student,req,id)});
+  
 })
 
-app.get("/student/assignment", (req,res) => {
-  res.render("student/assignment.ejs",{info});
+app.get("/student/:id/assignment", async (req,res) => {
+  let {id} = req.params;
+  res.render("student/assignment.ejs",{info : await getinfoById(Student,req,id)});
 })
 
-app.get("/student/fees", (req,res) => {
-  res.render("student/fees.ejs",{info});
+app.get("/student/:id/fees", async (req,res) => {
+  let {id} = req.params;
+
+  res.render("student/fees.ejs",{info : await getinfoById(Student,req,id)});
 })
 
-app.get("/student/infoupdate", (req,res) => {
-  res.render("student/infoupdate.ejs",{info});
+app.get("/student/:id/infoupdate", async (req,res) => {
+  let {id} = req.params;
+
+  res.render("student/infoupdate.ejs",{info : await getinfoById(Student,req,id)});
 })
 
-app.get("/student/marks", (req,res) => {
-  res.render("student/marks.ejs",{info});
+app.get("/student/:id/marks", async (req,res) => {
+  let {id} = req.params;
+
+  res.render("student/marks.ejs",{info : await getinfoById(Student,req,id)});
 })
 
-app.get("/student/mentor", (req,res) => {
-  res.render("student/mentor.ejs",{info});
+app.get("/student/:id/mentor", async (req,res) => {
+  let {id} = req.params;
+
+  res.render("student/mentor.ejs",{info : await getinfoById(Student,req,id)});
 })
 
-app.get("/student/papers", (req,res) => {
-  res.render("student/papers.ejs",{info});
+app.get("/student/:id/papers", async (req,res) => {
+  let {id} = req.params;
+
+  res.render("student/papers.ejs",{info : await getinfoById(Student,req,id)});
 })
 
-app.get("/student/routine", (req,res) => {
-  res.render("student/routine.ejs",{info});
+app.get("/student/:id/routine", async (req,res) => {
+  let {id} = req.params;
+
+  res.render("student/routine.ejs",{info : await getinfoById(Student,req,id)});
 })
 
-app.get("/student/syllabus", (req,res) => {
-  res.render("student/syllabus.ejs",{info});
+app.get("/student/:id/syllabus", async (req,res) => {
+  let {id} = req.params;
+
+  res.render("student/syllabus.ejs",{info : await getinfoById(Student,req,id)});
 })
 
 
