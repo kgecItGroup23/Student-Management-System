@@ -10,8 +10,6 @@ import session from "express-session";
 import bodyParser from "body-parser";
 
 
-
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 app.set("views", path.join(__dirname,"views"));
@@ -28,6 +26,10 @@ app.use(session({
   saveUninitialized: false,
   cookie: { secure: process.env.NODE_ENV === 'production', maxAge: 24 * 60 * 60 * 1000 } // 24 hours
 }));
+
+
+
+
 
 main()
 .then(() => 
@@ -125,6 +127,43 @@ app.post("/teacher", async (req, res) => {
 
   res.render("teacher/home", { info: req.session.info });
 });
+
+// student
+app.get("/student/notices", (req,res) => {
+  res.render("student/notices.ejs",{info});
+})
+
+app.get("/student/assignment", (req,res) => {
+  res.render("student/assignment.ejs",{info});
+})
+
+app.get("/student/fees", (req,res) => {
+  res.render("student/fees.ejs",{info});
+})
+
+app.get("/student/infoupdate", (req,res) => {
+  res.render("student/infoupdate.ejs",{info});
+})
+
+app.get("/student/marks", (req,res) => {
+  res.render("student/marks.ejs",{info});
+})
+
+app.get("/student/mentor", (req,res) => {
+  res.render("student/mentor.ejs",{info});
+})
+
+app.get("/student/papers", (req,res) => {
+  res.render("student/papers.ejs",{info});
+})
+
+app.get("/student/routine", (req,res) => {
+  res.render("student/routine.ejs",{info});
+})
+
+app.get("/student/syllabus", (req,res) => {
+  res.render("student/syllabus.ejs",{info});
+})
 
 
 app.listen(port, () => {
