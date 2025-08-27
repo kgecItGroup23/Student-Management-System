@@ -79,15 +79,15 @@
 
 <body>
     <div class="welcome">
-        
+        <h1><%= info.id %></h1>
     </div>
     <div class="maincontainer">
         <div class="slidebar">
-            <a href="/teacher/:id/facultymembers">Facutly Members</a>
-            <a href="/teacher/:id/routine">Routine</a>
-            <a href="/teacher/:id/students">Students</a>
-            <a href="/teacher/:id/analysis">Stastical Analysis</a>
-            <a href="/teacher/:id/info">Info</a>
+            <a href="/teacher/<%= info.id %>/facultymembers">Facutly Members</a>
+            <a href="/teacher/<%= info.id %>/routine">Routine</a>
+            <a href="/teacher/<%= info.id %>/students">Students</a>
+            <a href="/teacher/<%= info.id %>/analysis">Stastical Analysis</a>
+            <a href="/teacher/<%= info.id %>/info">Info</a>
         </div>
 
         <div class="noticeandpi">
@@ -95,10 +95,10 @@
         </div>
 
         <div class="yearscontainer">
-            <a href="/teacher/:id/firstyear"><div id="firstyear" class="year">First Year</div></a>
-            <a href="/teacher/:id/secondyear"><div id="secondyear" class="year">Second Year</div></a>
-            <a href="/teacher/:id/thirdyear"><div id="thirdyear" class="year">Third Year</div></a>
-            <a href="/teacher/:id/fourthyear"><div id="fourthyear" class="year">Fourth Year</div></a>
+            <a href="/teacher/<%= info.id %>/firstyear"><div id="firstyear" class="year">First Year</div></a>
+            <a href="/teacher/<%= info.id %>/secondyear"><div id="secondyear" class="year">Second Year</div></a>
+            <a href="/teacher/<%= info.id %>/thirdyear"><div id="thirdyear" class="year">Third Year</div></a>
+            <a href="/teacher/<%= info.id %>/fourthyear"><div id="fourthyear" class="year">Fourth Year</div></a>
 
         </div>
     </div>

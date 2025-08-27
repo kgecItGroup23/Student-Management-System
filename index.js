@@ -11,7 +11,6 @@ import Curriculum from "./models/curriculum.js";
 import session from "express-session";
 import bodyParser from "body-parser";
 
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 app.set("views", path.join(__dirname,"views"));
@@ -36,6 +35,7 @@ console.log("Connectiion Sucessful"))
 async function main() {
   await mongoose.connect('mongodb://127.0.0.1:27017/StudentDataBase');
 }
+
 
 
 
@@ -208,11 +208,9 @@ app.get("/student/:id/syllabus", async (req,res) => {
 })
 let findStudent = async (req,res,x,dep) => {
   try{
-    let students = await Student.find({ year: { $eq: x }, department: dep });
-    req.season.info = {
-      students
-    }
-    return req.session.info;
+    let students = await Student.find({ year: x , department: dep });
+
+    return students;
   }
   catch (err) {
     console.log(err);
@@ -222,11 +220,8 @@ let findStudent = async (req,res,x,dep) => {
 
 let findCurriculum = async (req,res, x, dep) => {
   try {
-    let curriculum = await Curriculum.find({ $or : [{semester : 2*x} ,{semester : 2*x-1} ] , department : dep  });
-    req.season.info = {
-      curriculum
-    }
-    return req.session.info;
+    let curriculum = await Curriculum.find({ semester: { $in: [2 * x, 2 * x - 1] }, department: dep });
+    return curriculum;
   }
   catch (err) {
     console.log(err);
@@ -236,8 +231,8 @@ let findCurriculum = async (req,res, x, dep) => {
 
 let findDepartment = async (res,id) => {
   try {
-    let department = await Curriculum.findById(id);
-    return department;
+    let department = await Teacher.findById(id);
+    return department.department;
   }
   catch (err) {
     console.log(err);
@@ -250,25 +245,36 @@ let findDepartment = async (res,id) => {
 app.get("/teacher/:id/firstyear",async (req,res) => {
   let {id} = req.params;
   let department = await findDepartment(res,id);
-  console.log(department)
-  let firststudent = await findStudent(req,res, department,1);
-  console.log(firststudent)
-  let firstcurriculum = await findCurriculum(req,res,department, 1);
-  console.log(firstcurriculum)
-
-  res.render("teacher/firstyear", { firstcurriculum, firststudent });
+  let student = await findStudent(req,res, 1,department);
+  let curriculum = await findCurriculum(req,res,1,department);
+  res.render("teacher/firstyear", { curriculum, student });
 });
 
-app.get("/teacher/:id/secondyear", (req, res) => {
-  res.render("teacher/secondyear");
+app.get("/teacher/:id/secondyear", async(req, res) => {
+  let { id } = req.params;
+  let department = await findDepartment(res, id);
+
+  let student = await findStudent(req, res, 2, department);
+
+  let curriculum = await findCurriculum(req, res, 2, department);
+
+  res.render("teacher/secondyear", { curriculum, student });
 });
 
-app.get("/teacher/:id/thirdyear", (req, res) => {
-  res.render("teacher/thirdyear");
+app.get("/teacher/:id/thirdyear", async (req, res) => {
+  let { id } = req.params;
+  let department = await findDepartment(res, id);
+  let student = await findStudent(req, res, 3, department);
+  let curriculum = await findCurriculum(req, res, 3, department);
+  res.render("teacher/thirdyear", { curriculum, student });
 });
 
-app.get("/teacher/:id/fourthyear", (req, res) => {
-  res.render("teacher/fourthyear");
+app.get("/teacher/:id/fourthyear", async (req, res) => {
+  let { id } = req.params;
+  let department = await findDepartment(res, id);
+  let student = await findStudent(req, res, 4, department);
+  let curriculum = await findCurriculum(req, res, 4, department);
+  res.render("teacher/fourthyear", { curriculum, student });
 });
 
 app.get("/teacher/:id/analysis", (req, res) => {
