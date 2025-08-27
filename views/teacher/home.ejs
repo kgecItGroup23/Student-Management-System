@@ -13,22 +13,23 @@
 </head>
 
 <body>
+
         <!-- Sidebar -->
         <div class="sidebar">
             <div class="account">
                 <div class="avatar">
                     <i class="fa-solid fa-user-tie"></i>
                 </div>
-                <span>IT, HOD</span>
+                <span><%= info.department %>, <%= info.designation %></span>
             </div>
             <div class="sidebar-box">
                 <ul>
-                    <li><a href="/teacher/:id/facultymembers">Facutly Members</a></li>
-                    <li><a href="/teacher/:id/routine">Routine</a></li>
-                    <li><a href="/teacher/:id/students">Students</a></li>
-                    <li><a href="/teacher/:id/analysis">Stastical Analysis</a></li>
-                    <li><a href="/teacher/:id/info">Info</a></li>
-                    <li><a href="#">log out <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                    <li><a href="/teacher/<%= info.id %>/facultymembers">Facutly Members</a></li>
+                    <li><a href="/teacher/<%= info.id %>/routine">Routine</a></li>
+                    <li><a href="/teacher/<%= info.id %>/students">Students</a></li>
+                    <li><a href="/teacher/<%= info.id %>/analysis">Stastical Analysis</a></li>
+                    <li><a href="/teacher/<%= info.id %>/info">Info</a></li>
+                    <li><a href="/">log out <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -36,7 +37,7 @@
         <!-- Main content -->
         <div class="main">
             <div class="header">
-                <h1>Welcome back, Dr. Ramesh</h1>
+                <h1>Welcome back, <%= info.fullname %></h1>
                 <img src="/asset/teacher.png" alt="">
             </div>
             <div class="content-grid">
@@ -48,22 +49,22 @@
                     <div class="classrooms">
                         <ul>
                             <li>
-                                <a class="card" href="/teacher/:id/firstyear">
+                                <a class="card" href="/teacher/<%= info.id %>/firstyear">
                                     <div id="firstyear" class="year">First Year</div>
                                 </a>
                             </li>
                             <li>
-                                <a class="card" href="/teacher/:id/secondyear">
+                                <a class="card" href="/teacher/<%= info.id %>/secondyear">
                                     <div id="secondyear" class="year">Second Year</div>
                                 </a>
                             </li>
                             <li>
-                                <a class="card" href="/teacher/:id/thirdyear">
+                                <a class="card" href="/teacher/<%= info.id %>/thirdyear">
                                     <div id="thirdyear" class="year">Third Year</div>
                                 </a>
                             </li>
                             <li>
-                                <a class="card" href="/teacher/:id/fourthyear">
+                                <a class="card" href="/teacher/<%= info.id %>/fourthyear">
                                     <div id="fourthyear" class="year">Fourth Year</div>
                                 </a>
                             </li>

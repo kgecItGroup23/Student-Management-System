@@ -28,5 +28,5 @@ let curriculumSchema = new mongoose.Schema({
 })
 
 
-const Curriculum = mongoose.model("Curriculum", curriculumSchema);
+const Curriculum  = mongoose.model("Curriculum", curriculumSchema);
 export default Curriculum;
