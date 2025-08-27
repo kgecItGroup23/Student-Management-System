@@ -5,102 +5,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/teacher/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
         integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            display: flex;
-            /* background-color: yellow; */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-        }
-
-        .welcome {
-            /* background-color: green; */
-            height: 10vh;
-            width: 85%;
-            position: relative;
-            top: 4vh;
-            border: 2px solid black;
-
-        }
-
-        .maincontainer {
-            /* background-color: red; */
-            height: 72vh;
-            width: 95vw;
-            position: relative;
-            top: 13vh;
-            border: 2px solid black;
-            display: flex;
-        }
-
-        .slidebar {
-            background-color: skyblue;
-            height: 100%;
-            width: 17%
-        }
-
-        .yearscontainer {
-            background-color: lightcoral;
-            height: 100%;
-            width: 28%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-
-        }
-
-        .noticeandpi {
-            background-color: lightgreen;
-            height: 100%;
-            width: 55%
-        }
-
-        .year {
-            background-color: rgb(233, 247, 78);
-            width: 6rem;
-            text-align: center;
-            height: 4rem;
-            border: 2px solid black;
-        }
-
-    </style>
+    
 </head>
 
 <body>
-    <div class="welcome">
-        
-    </div>
-    <div class="maincontainer">
-        <div class="slidebar">
-            <a href="/teacher/:id/facultymembers">Facutly Members</a>
-            <a href="/teacher/:id/routine">Routine</a>
-            <a href="/teacher/:id/students">Students</a>
-            <a href="/teacher/:id/analysis">Stastical Analysis</a>
-            <a href="/teacher/:id/info">Info</a>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="account">
+                <div class="avatar">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <span>IT, HOD</span>
+            </div>
+            <div class="sidebar-box">
+                <ul>
+                    <li><a href="/teacher/:id/facultymembers">Facutly Members</a></li>
+                    <li><a href="/teacher/:id/routine">Routine</a></li>
+                    <li><a href="/teacher/:id/students">Students</a></li>
+                    <li><a href="/teacher/:id/analysis">Stastical Analysis</a></li>
+                    <li><a href="/teacher/:id/info">Info</a></li>
+                    <li><a href="#">log out <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
+                </ul>
+            </div>
         </div>
 
-        <div class="noticeandpi">
-
+        <!-- Main content -->
+        <div class="main">
+            <div class="header">
+                <h1>Welcome back, Dr. Ramesh</h1>
+                <img src="/asset/teacher.png" alt="">
+            </div>
+            <div class="content-grid">
+                <div class="left-column">
+                    
+                </div>
+                <div class="right-column">
+                    <h2>Classes</h2>
+                    <div class="classrooms">
+                        <ul>
+                            <li>
+                                <a class="card" href="/teacher/:id/firstyear">
+                                    <div id="firstyear" class="year">First Year</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="card" href="/teacher/:id/secondyear">
+                                    <div id="secondyear" class="year">Second Year</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="card" href="/teacher/:id/thirdyear">
+                                    <div id="thirdyear" class="year">Third Year</div>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="card" href="/teacher/:id/fourthyear">
+                                    <div id="fourthyear" class="year">Fourth Year</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="yearscontainer">
-            <a href="/teacher/:id/firstyear"><div id="firstyear" class="year">First Year</div></a>
-            <a href="/teacher/:id/secondyear"><div id="secondyear" class="year">Second Year</div></a>
-            <a href="/teacher/:id/thirdyear"><div id="thirdyear" class="year">Third Year</div></a>
-            <a href="/teacher/:id/fourthyear"><div id="fourthyear" class="year">Fourth Year</div></a>
-
-        </div>
-    </div>
 
 </body>

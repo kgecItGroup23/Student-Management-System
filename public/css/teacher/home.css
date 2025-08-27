@@ -1,0 +1,210 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color1: #371d41;
+    --color2: #9929EA;
+    --color3: #CC66DA;
+    --color4: #FAEB92;
+    --color5: #375fe7;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    background-color: whitesmoke;
+}
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    background-image: linear-gradient(var(--color3), var(--color2) 80%);
+    box-shadow: 0px 0px 3px black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.sidebar .account {
+    padding: 10px;
+    margin: 10px;
+    color: white;
+    text-align: center;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 4rem;
+    overflow: hidden;
+    box-shadow: 0px 0px 5px var(--color1);
+}
+
+.sidebar-box {
+    width: 100%;
+    margin-top: 3rem;
+}
+
+.sidebar-box ul {
+    overflow: hidden;
+}
+
+.sidebar-box ul li a {
+    height: 4rem;
+    width: 100%;
+    padding-left: 1rem;
+    border-bottom: 1px solid var(--color3);
+    color: var(--color4);
+    font-weight: 100;
+    display: flex;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    text-decoration: none;
+
+}
+
+/* Main content */
+.main {
+    margin-left: 200px;
+    /* offset for sidebar */
+    flex: 1;
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 120px 1fr;
+    gap: 20px;
+}
+
+/* Top wide header */
+.header {
+    margin-top: 1rem;
+    position: relative;
+    border-radius: 15px;
+    background-image: linear-gradient(90deg, var(--color2), var(--color5));
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: 0px 0px 5px gray;
+    /* overflow: hidden; */
+}
+
+.header h1 {
+    color: white;
+    text-shadow: 0px 1px 3px var(--color1);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.header img {
+    height: 9rem;
+    object-fit: cover;
+    position: absolute;
+    right: 7rem;
+}
+
+/* Bottom content grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+/* Left column inside content */
+.left-column {
+    height: 74vh;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 5rem;
+    overflow-y: scroll;
+    /* background-color: greenyellow; */
+}
+
+.left-column::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+/* Right column inside content */
+.right-column {
+    height: 74vh;
+    padding-left: 1rem;
+    border-left: 1px solid var(--color5);
+}
+
+.right-column h2 {
+    border-bottom: 1px solid #a8dece;
+    text-align: center;
+    font-size: 3rem;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 800;
+    background: linear-gradient(#a8dece, #ebe8a5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.right-column ul {
+    padding: 0 3rem;
+    list-style: none;
+}
+
+.right-column ul li .card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 4.5rem;
+    border-radius: 15px;
+    background-image: linear-gradient(#a8dece, #ebe8a5);
+    margin: 2rem 0;
+    padding-left: 1rem;
+    color: white;
+    position: relative;
+    box-shadow: 0px 0px 5px gray;
+    text-decoration: none;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 2px solid white;
+    border-radius: 13px;
+    pointer-events: none;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 0px 10px gray;
+}
+
+.card div {
+    font-size: 1.5rem;
+    text-shadow: 0px 1px 3px var(--color1);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+.card h3 {
+    font-family: monospace;
+    text-shadow: 0px 1px 1px var(--color1);
+    font-weight: 400;
+    font-size: 1.2rem;
+}
