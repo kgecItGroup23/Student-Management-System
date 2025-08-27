@@ -5,68 +5,70 @@
 }
 
 :root {
-    --color1: #333;
-    --color2: #ba8254;
-    --color3: #ffbf00;
-    --color4: #f8f9eb;
+    --color1: #371d41;
+    --color2: #9929EA;
+    --color3: #CC66DA;
+    --color4: #FAEB92;
     --color5: #375fe7;
 }
 
-body {
-    height: 100vh;
-    width: 100vw;
-    background-color: #dedfd9;
-    display: flex;justify-content: center;
-}
+    body {
+        height: 100vh;
+        width: 100vw;
+        background-color: #dedfd9;
+        display: flex;
+        justify-content: center;
+    }
 
-form {
-    position: relative;
-    width: min(80%, 600px);
-    margin: 4rem 0;
-    padding: 1rem;
-    background-color: var(--color4);
-    border-radius: 0.5rem;
-    box-shadow: 0px 0px 7px 0px var(--color2);
-}
+    form {
+        position: relative;
+        width: min(80%, 600px);
+        margin: 4rem 0;
+        padding: 1rem;
+        background-color: var(--color4);
+        border-radius: 0.5rem;
+        box-shadow: 0px 0px 7px 0px var(--color2);
+    }
 
-form div {
-    padding: 0.6rem;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    gap: 2rem;
-}
-form div div {
-    width: 100%;
-    padding: 0;
-    border: none;
-}
+    form div {
+        padding: 0.6rem;
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 2rem;
+    }
 
-form div label {
-    width: 30%;
-}
+    form div div {
+        width: 100%;
+        padding: 0;
+        border: none;
+    }
 
-form div input {
-    width: 100%;
-    height: 1.3rem;
-    outline: none;
-}
+    form div label {
+        width: 30%;
+    }
 
-form div input:focus {
-    border: none;
-    box-shadow: 0px 0px 3px 1px var(--color5);
-}
+    form div input {
+        width: 100%;
+        height: 1.3rem;
+        outline: none;
+    }
 
-form button {
+    form div input:focus {
+        border: none;
+        box-shadow: 0px 0px 3px 1px var(--color5);
+    }
+
+    form button {
         position: absolute;
-    bottom: 1rem;
-    right: 1.7rem;
-    padding: 3px 7px;
-    background-color: var(--color3);
-    border: 2px solid var(--color2);
-    border-radius: 8px;
-    box-shadow: 0px 0px 3px 0px var(--color1);
-    font-size: 17px;
-    cursor: pointer;
-    color: var(--color1);    
-}
+        bottom: 1rem;
+        right: 1.7rem;
+        padding: 3px 7px;
+        background-color: var(--color3);
+        border: 2px solid var(--color2);
+        border-radius: 8px;
+        box-shadow: 0px 0px 3px 0px var(--color1);
+        font-size: 17px;
+        cursor: pointer;
+        color: white;
+    }
