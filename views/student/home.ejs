@@ -1,96 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
-        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/student/home.css">
-</head>
-<%- include('../includes/header0') %>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+            integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="/css/student/home.css">
+    </head>
 
     <body>
-        <div class="home">
-            <%- include('../includes/student/navbar') %>
-                <div class="outer">
-                    <div class="options">
-                        <div class="inner" id="first">
-                            <a href="/student/<%= info.id %>/notices">
-                                <div class="op"><i class="fa-solid fa-bell"></i>Notices</div>
-                            </a>
+        <!-- <main> -->
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="account">
+                    <div class="avatar">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <span>IT, 3rd year</span>
+                </div>
+                <div class="sidebar-box">
+                    <ul>
+                        <li>Routine</li>
+                        <li>Result</li>
+                        <li>Mentor</li>
+                        <li>Update info</li>
+                        <li id="logout">log out <i class="fa-solid fa-arrow-right-from-bracket"></i></li>
+                    </ul>
+                </div>
+            </div>
 
-                            <a href="/student/<%= info.id %>/routine">
-                                <div class="op"><i class="fa-solid fa-clipboard-list"></i>Routine</div>
-                            </a>
-
-                            <a href="/student/<%= info.id %>/assignment">
-                                <div class="op"><i class="fa-solid fa-list"></i>Assignment</div>
-                            </a>
+            <!-- Main content -->
+            <div class="main">
+                <div class="header">
+                    <h1>Welcom back, Mohit</h1>
+                    <img src="/asset/Adobe Express - file.png" alt="">
+                </div>
+                <div class="content-grid">
+                    <div class="left-column">
+                        <div class="card">
+                            <h2>Paper Name</h2>
+                            <h3>paper code</h3>
                         </div>
-
-                        <div class="inner" id="second">
-                        
-                            <a href="/student/<%= info.id %>/marks">
-                                <div class="op"><i class="fa-solid fa-square-poll-vertical"></i>Result</div>
-                            </a>
-                        
-                            <a href="/student/<%= info.id %>/fees">
-                                <div class="op"><i class="fa-solid fa-indian-rupee-sign"></i>Fees</div>
-                            </a>
-                        
-                            <a href="/student/<%= info.id %>/syllabus">
-                                <div class="op"><i class="fa-solid fa-book"></i>Syllabus</div>
-                            </a>
-                        
+                        <div class="card">
+                            <h2>Paper Name</h2>
+                            <h3>paper code</h3>
                         </div>
-                        <div class="inner" id="third">
-                        
-                            <a href="/student/<%= info.id %>/papers">
-                                <div class="op"><i class="fa-solid fa-file-pen"></i>Papers</div>
-                            </a>
-                        
-                            <a href="/student/<%= info.id %>/mentor">
-                                <div class="op"><i class="fa-solid fa-user-tie"></i></i>Mentor</div>
-                            </a>
-                        
-                            <a href="/student/<%= info.id %>/infoupdate">
-                                <div class="op"><i class="fa-solid fa-circle-info"></i>Update Info</div>
-                            </a>
-                        
+                        <div class="card">
+                            <h2>Paper Name</h2>
+                            <h3>paper code</h3>
                         </div>
                     </div>
-                    <div class="details">
-                        <h2>Student Basic Details</h2>
-                        <ul class="listdetail">
-                            <li>Name : <%=info.fullname %>
-                            </li>
-                            <li>Rollno : <%=info.rollno %>
-                            </li>
-                            <li>Address : <%=info.address %>
-                            </li>
-                            <li>Year : <%=info.year %>
-                            </li>
-                            <li>Course : <%=info.course %>
-                            </li>
-                            <li>Gmail : <%=info.gmail %>
-                            </li>
-                            <li>Father Name :<%=info.fathername %>
-                            </li>
-                            <li>Mother Name : <%=info.mothername %>
-                            </li>
-                            <li>D.O.B : <%=info.birthdate%>
-                            </li>
-                            <li>Department : <%=info.department %>
-                            </li>
-                            <li>Mobile Number : <%=info.mobilenum %>
-                            </li>
+                    <div class="notice-column">
+                        <h2>Notice</h2>
+                        <ul>
+                            <li class="notice">notice 1: Lorem ipsum dolor sit amet.</li>
+                            <li class="notice">notice 2: Lorem ipsum dolor sit amet.</li>
+                            <li class="notice">notice 3: Lorem ipsum dolor sit amet.</li>
+                            <li class="notice">notice 4: Lorem ipsum dolor sit amet.</li>
                         </ul>
-                    
+                    </div>
                 </div>
-        </div>
+            </div>
+        <!-- </main> -->
     </body>
 
-</html>
+    </html>

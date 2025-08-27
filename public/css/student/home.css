@@ -1,141 +1,211 @@
-/* ba8254 */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* overflow: hidden; */
 }
 
 :root {
-    --color1: #333;
-    --color2: #ba8254;
-    --color3: #ffbf00;
-    --color4: #f8f9eb;
+    --color1: #371d41;
+    --color2: #9929EA;
+    --color3: #CC66DA;
+    --color4: #FAEB92;
     --color5: #375fe7;
 }
 
-.outer {
-    height: 100%;
+body {
+    font-family: Arial, sans-serif;
     display: flex;
-    flex-direction: row;
-    background-color: var(--color4);
-}
-.home{
-    position: relative;
-    top: 6.85rem;
+    background-color: whitesmoke;
 }
 
-.options {
-    width: 72vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 4.5rem;
-    padding-top: 1rem;
-    border-right: 2px solid rgb(176, 174, 174);
-}
-
-
-.inner {
-    width: 80%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    justify-content: space-between;
-    margin-bottom: 5.5rem;
-}
-
-.op {
-    height: 5.7rem;
-    width: 5.7rem;
-    padding: 10px;
-    border: 2px solid black;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.op i {
-    font-size: 2rem;
-}
-
-a {
-    text-decoration: none;
-    color: black;
-}
-
-.navbar2 {
-    width: 100%;
-    height: 2.5rem;
-    background-color: #ba8254;
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    z-index: 10;
+/* Sidebar */
+.sidebar {
     position: fixed;
-    top: 15vh;
-}
-
-#user {
-    position: relative;
-    right: 13rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: .9rem;
-    font-size: 1.4rem;
-}
-
-.icon {
-    background-color: #fff;
-    height: 1.8rem;
-    width: 1.8rem;
-    border-radius: 50%;
-    align-items: center;
-    overflow: hidden;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-.icon i {
-    position: relative;
-    top: 0.42rem;
-    color: var(--color2);
-}
-#user p {
-    font-size: 1.2rem;
-}
-
-.details{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.2rem;
-    width: 28vw;
+    left: 0;
+    top: 0;
+    width: 200px;
     height: 100vh;
-    position: relative;
-    bottom: 5rem;
-}
-.listdetail{
-    list-style-type: none;
-    border: 2px solid black;
-    height: 45%;
-    width: 80%;
-    border-radius:  3.5rem 0 3.5rem 0;
-    line-height: 1.5rem;
-    font-size: 1.2rem;
+    background: var(--color2);
+    box-shadow: 0px 0px 3px black;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-    padding-left: 1.7rem;
+    align-items: center;
+    padding: 20px;
 }
 
+.sidebar .account {
+    /* background-color: #fff; */
+    padding: 10px;
+    margin: 10px;
+    color: white;
+}
 
+.avatar {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 4rem;
+    overflow: hidden;
+    box-shadow: 0px 0px 5px var(--color1);
+}
 
-.inner a:hover {
-    background-color: #d9cfcf96;
+.sidebar-box {
+    width: 100%;
+    margin-top: 3rem;
+}
+
+.sidebar-box ul {
+    overflow: hidden;
+}
+
+.sidebar-box ul li {
+    height: 4rem;
+    width: 100%;
+    padding-left: 1.5rem;
+    border-bottom: 1px solid var(--color3);
+    color: var(--color4);
+    font-weight: 100;
+    display: flex;
+    align-items: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+
+}
+
+/* Main content */
+.main {
+    margin-left: 200px;
+    /* offset for sidebar */
+    flex: 1;
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 120px 1fr;
+    gap: 20px;
+}
+
+/* Top wide header */
+.header {
+    margin-top: 1rem;
+    position: relative;
+    border-radius: 15px;
+    background-image: linear-gradient(90deg, var(--color2), var(--color5));
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: 0px 0px 5px gray;
+    /* overflow: hidden; */
+}
+
+.header h1 {
+    color: white;
+    text-shadow: 0px 1px 3px var(--color1);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+}
+
+.header img {
+    height: 9rem;
+    object-fit: cover;
+    object-position: 0 -0.5rem;
+    position: absolute;
+    right: 7rem;
+}
+
+/* Bottom content grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+/* Left column inside content */
+.left-column {
+    height: 74vh;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 5rem;
+    overflow-y: scroll;
+}
+
+.left-column::-webkit-scrollbar {
+  display: none;      
+}
+
+.card {
+    border-radius: 15px;
+    height: 170px;
+    background-image: linear-gradient(#a8dece, #ebe8a5);
+    padding: 3rem 2rem;
+    color: white;
+    position: relative;
+    box-shadow: 0px 0px 5px gray;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 2px solid white;
+    border-radius: 13px;
+    pointer-events: none;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 0px 10px gray;
+}
+
+.card h2 {
+    font-size: 2.5rem;
+    text-shadow: 0px 1px 3px var(--color1);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+.card h3 {
+    font-family: monospace;
+    text-shadow: 0px 1px 1px var(--color1);
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+
+/* Right column inside content */
+.notice-column {
+    height: 74vh;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px gray;
+}
+
+.notice-column h2 {
+    background-color: orangered;
+    height: 3rem;
+    padding: .7rem;
+    font-size: 1.5rem;
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+}
+
+.notice-column ul {
+    padding: 5px;
+    background-color: #fff;
+
+}
+
+.notice-column ul li {
+    height: 4rem;
+    width: 100%;
+    padding: 10px 5px;
+    border-bottom: 1px solid gray;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
 }
