@@ -9,15 +9,7 @@ let studentSchema = new mongoose.Schema({
         type :String,
         required : true,
     },
-    address : {
-        type :String,
-        maxLength : 50,
-    },
     year : {
-        type :Number,
-        required : true,
-    },
-    course : {
         type :String,
         required : true,
     },
@@ -25,16 +17,8 @@ let studentSchema = new mongoose.Schema({
         type :String,
         required : true,
     },
-    fathername : {
-        type :String,
-       required : true,
-    },
-    mothername : {
-        type :String,
-       required : true,
-    },
     mobilenum : {
-        type : Number,
+        type : String,
         required : true,
     },
     department : {
@@ -42,15 +26,10 @@ let studentSchema = new mongoose.Schema({
         required : true,
     },
     rollno : {
-        type : Number,
+        type : String,
         required : true,
         unique : true,
     },
-    birthdate : {
-        type : String,
-        required : true, 
-    }
-
     
 });
     

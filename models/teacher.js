@@ -9,14 +9,7 @@ let teacherSchema = new mongoose.Schema({
         type :String,
         required : true,
     },
-    address : {
-        type :String,
-        maxLength : 50,
-    },
-    highestQualification :{
-        type : String,
-    },
-    position : {
+    designation : {
         type : String,
     },
     gmail : {
@@ -27,9 +20,6 @@ let teacherSchema = new mongoose.Schema({
     },
     department : {
         type : String,
-    },
-    birthdate : {
-        type : Date,
     },
     
 });

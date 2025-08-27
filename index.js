@@ -7,6 +7,7 @@ import methodOverride from "method-override";
 import Teacher from "./models/teacher.js";
 import Student from "./models/student.js";
 import Notice from "./models/notice.js";
+import Curriculum from "./models/curriculum.js";
 import session from "express-session";
 import bodyParser from "body-parser";
 
@@ -41,7 +42,7 @@ async function main() {
 const port = 5000;
 
 
-const getinfoById = async (Student, req, id) => {
+const getinfoById = async (Student, req,res, id) => {
   try {
     const user = await Student.findById(id);
     req.session.info = {
@@ -125,13 +126,8 @@ app.post("/student", async (req, res) => {
     id : user._id,
     fullname: user.fullname,
     rollno : user.rollno,
-    address : user.address,
     year : user.year,
-    course : user.course,
     gmail : user.gmail,
-    fathername : user.fathername,
-    mothername :user.mothername,
-    birthdate : user.birthdate,
     department : user.department,
     mobilenum : user.mobilenum,
   };
@@ -149,7 +145,6 @@ app.post("/teacher", async (req, res) => {
   req.session.info = {
     id: user._id,
     fullname: user.fullname,
-    
   };
 
   res.render("teacher/home", { info: req.session.info });
@@ -166,7 +161,7 @@ app.get("/student/:id/notices", async (req,res) => {
 
 app.get("/student/:id/assignment", async (req,res) => {
   let {id} = req.params;
-  res.render("student/assignment.ejs",{info : await getinfoById(Student,req,id)});
+  res.render("student/assignment.ejs",{info : await getinfoById(Student,req,res,id)});
 })
 
 app.get("/student/:id/fees", async (req,res) => {
@@ -195,8 +190,9 @@ app.get("/student/:id/mentor", async (req,res) => {
 
 app.get("/student/:id/papers", async (req,res) => {
   let {id} = req.params;
+  let info = await getinfoById(Student, req, id)
 
-  res.render("student/papers.ejs",{info : await getinfoById(Student,req,id)});
+  res.render("student/papers.ejs",{info});
 })
 
 app.get("/student/:id/routine", async (req,res) => {
@@ -210,6 +206,87 @@ app.get("/student/:id/syllabus", async (req,res) => {
 
   res.render("student/syllabus.ejs",{info : await getinfoById(Student,req,id)});
 })
+let findStudent = async (req,res,x,dep) => {
+  try{
+    let students = await Student.find({ year: { $eq: x }, department: dep });
+    req.season.info = {
+      students
+    }
+    return req.session.info;
+  }
+  catch (err) {
+    console.log(err);
+    res.render("landingPage/errorpage.ejs");
+  }
+}
+
+let findCurriculum = async (req,res, x, dep) => {
+  try {
+    let curriculum = await Curriculum.find({ $or : [{semester : 2*x} ,{semester : 2*x-1} ] , department : dep  });
+    req.season.info = {
+      curriculum
+    }
+    return req.session.info;
+  }
+  catch (err) {
+    console.log(err);
+    res.render("landingPage/errorpage.ejs");
+  }
+}
+
+let findDepartment = async (res,id) => {
+  try {
+    let department = await Curriculum.findById(id);
+    return department;
+  }
+  catch (err) {
+    console.log(err);
+    res.render("landingPage/errorpage.ejs");
+  }
+}
+
+
+// Teacher
+app.get("/teacher/:id/firstyear",async (req,res) => {
+  let {id} = req.params;
+  let department = await findDepartment(res,id);
+  console.log(department)
+  let firststudent = await findStudent(req,res, department,1);
+  console.log(firststudent)
+  let firstcurriculum = await findCurriculum(req,res,department, 1);
+  console.log(firstcurriculum)
+
+  res.render("teacher/firstyear", { firstcurriculum, firststudent });
+});
+
+app.get("/teacher/:id/secondyear", (req, res) => {
+  res.render("teacher/secondyear");
+});
+
+app.get("/teacher/:id/thirdyear", (req, res) => {
+  res.render("teacher/thirdyear");
+});
+
+app.get("/teacher/:id/fourthyear", (req, res) => {
+  res.render("teacher/fourthyear");
+});
+
+app.get("/teacher/:id/analysis", (req, res) => {
+  res.render("teacher/analysis");
+});
+app.get("/teacher/:id/facultymembers", (req, res) => {
+  res.render("teacher/facultymember");
+});
+app.get("/teacher/:id/info", (req, res) => {
+  res.render("teacher/info");
+});
+app.get("/teacher/:id/students", (req, res) => {
+  res.render("teacher/students");
+});
+app.get("/teacher/:id/routine", (req, res) => {
+  res.render("teacher/routine");
+})
+
 
 
 app.listen(port, () => {
