@@ -1,70 +1,96 @@
-    <!DOCTYPE html>
-    <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+      integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/css/student/home.css" />
+  </head>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
-            integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
-            crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="/css/student/home.css">
-    </head>
+  <body>
+    <!-- <main> -->
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="account">
+        <div class="avatar">
+          <i class="fa-solid fa-user-graduate"></i>
+        </div>
+        <span>
+          <%=info.department %>, 
+          <%= info.year == '1' ? '1st' : 
+            info.year == '2' ? '2nd' : 
+            info.year == '3' ? '3rd' : 
+            info.year == '4' ? '4th' : '' %> year
+        </span>
+      </div>
+      <div class="sidebar-box">
+        <ul>
+          <a href=""><li>Routine</li></a>
+          <a href=""><li>Result</li></a>
+          <a href=""><li>Mentor</li></a>
+          <a href=""><li>Update info</li></a>
+          <a href="">
+            <li id="logout">
+             log out <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </li>
+          </a>
+        <!-- <li><a href="">Routine</a></li>
+        <li><a href="">Result</a></li>
+        <li><a href="">Mentor</a></li>
+        <li><a href="">Update info</a></li>
+        
+        <li id="logout">
+            <a href=""></a>log out <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        </li> -->
+        </ul>
+      </div>
+    </div>
 
-    <body>
-        <!-- <main> -->
-            <!-- Sidebar -->
-            <div class="sidebar">
-                <div class="account">
-                    <div class="avatar">
-                    <i class="fa-solid fa-user-graduate"></i>
-                </div>
-                <span>IT, 3rd year</span>
-                </div>
-                <div class="sidebar-box">
-                    <ul>
-                        <li>Routine</li>
-                        <li>Result</li>
-                        <li>Mentor</li>
-                        <li>Update info</li>
-                        <li id="logout">log out <i class="fa-solid fa-arrow-right-from-bracket"></i></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Main content -->
-            <div class="main">
-                <div class="header">
-                    <h1>Welcom back, Mohit</h1>
-                    <img src="/asset/Adobe Express - file.png" alt="">
-                </div>
-                <div class="content-grid">
-                    <div class="left-column">
-                        <div class="card">
-                            <h2>Paper Name</h2>
-                            <h3>paper code</h3>
-                        </div>
-                        <div class="card">
-                            <h2>Paper Name</h2>
-                            <h3>paper code</h3>
-                        </div>
-                        <div class="card">
-                            <h2>Paper Name</h2>
-                            <h3>paper code</h3>
-                        </div>
+    <!-- Main content -->
+    <div class="main">
+      <div class="header">
+        <h1>Welcom back, <%= info.fullname %></h1>
+        <img src="/asset/Adobe Express - file.png" alt="" />
+      </div>
+      <div class="content-grid">
+        <div class="left-column">
+          <% curriculum.forEach((curr,i) => { %>
+            <% if (i===0) { %>
+                <h3>Previous Sem</h3>
+                <% } else { %>
+                    <h3>Current Sem</h3>
+                <% } %>
+            <% curr.papers.forEach((paper,j) => { %>
+                <a href="/student/paper/<%= info.id %>/<%= paper.id %>">
+                    <div class="card">
+                        <h2><%= paper.paperName %></h2>
+                        <h3><%= paper.paperCode %></h3>
                     </div>
-                    <div class="notice-column">
-                        <h2>Notice</h2>
-                        <ul>
-                            <li class="notice">notice 1: Lorem ipsum dolor sit amet.</li>
-                            <li class="notice">notice 2: Lorem ipsum dolor sit amet.</li>
-                            <li class="notice">notice 3: Lorem ipsum dolor sit amet.</li>
-                            <li class="notice">notice 4: Lorem ipsum dolor sit amet.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        <!-- </main> -->
-    </body>
-
-    </html>
+                </a>
+            <% }) %>
+            <% if(i == 0) { %> 
+                <hr>
+            <% } %>
+          <% }) %>
+        </div>
+        <div class="notice-column">
+          <h2>Notice</h2>
+          <ul>
+            <li class="notice">notice 1: Lorem ipsum dolor sit amet.</li>
+            <li class="notice">notice 2: Lorem ipsum dolor sit amet.</li>
+            <li class="notice">notice 3: Lorem ipsum dolor sit amet.</li>
+            <li class="notice">notice 4: Lorem ipsum dolor sit amet.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- </main> -->
+  </body>
+</html>

@@ -42,31 +42,7 @@ async function main() {
 const port = 5000;
 
 
-const getinfoById = async (Student, req,res, id) => {
-  try {
-    const user = await Student.findById(id);
-    req.session.info = {
-      id: user._id,
-      fullname: user.fullname,
-      rollno: user.rollno,
-      address: user.address,
-      year: user.year,
-      course: user.course,
-      gmail: user.gmail,
-      fathername: user.fathername,
-      mothername: user.mothername,
-      birthdate: user.birthdate,
-      department: user.department,
-      mobilenum: user.mobilenum,
-    };
 
-    return req.session.info;
-
-  } catch (err) {
-    console.error(err.message);
-    res.render("landingPage/errorpage.ejs");
-  }
-};
 
 
 // Landing Page
@@ -132,7 +108,11 @@ app.post("/student", async (req, res) => {
     mobilenum : user.mobilenum,
   };
   
-  res.render("student/home", { info: req.session.info });
+  let department = user.department;
+  let year = user.year;
+  let curriculum = await findCurriculum(req, res, year, department);
+
+  res.render("student/home", { info: req.session.info, curriculum });
 });
 
 // Teacher Authentication
@@ -218,6 +198,38 @@ let findStudent = async (req,res,x,dep) => {
   }
 }
 
+app.get("/student/paper/:st/:pp",async (req,res) => {
+  let { st, pp } = req.params;
+  let student = await getinfoById(Student, req, res, st);
+  let paper = await findpaperbyId(req,res,pp);
+  
+  res.render("student/papers.ejs", { student, paper })
+})
+
+// functions
+
+const findpaperbyId = async (req,res,pp) => {
+   try{
+     let paper = await Curriculum.findOne({ "papers._id": pp }, { papers: { $elemMatch: { _id: pp } } })  //  only matching paper return not the ehole curriculum 
+     return paper.papers[0];
+   }
+   catch(err){
+    console.log(err);
+     res.render("landingPage/errorpage.ejs")
+   }
+  }
+
+const getinfoById = async (Student, req, res, id) => {
+  try {
+    const student = await Student.findById(id);
+    return student;
+
+  } catch (err) {
+    console.error(err.message);
+    res.render("landingPage/errorpage.ejs");
+  }
+};
+
 let findCurriculum = async (req,res, x, dep) => {
   try {
     let curriculum = await Curriculum.find({ semester: { $in: [2 * x, 2 * x - 1] }, department: dep });
@@ -229,9 +241,9 @@ let findCurriculum = async (req,res, x, dep) => {
   }
 }
 
-let findDepartment = async (res,id) => {
+let findDepartment = async (Database,res,id) => {
   try {
-    let department = await Teacher.findById(id);
+    let department = await Database.findById(id);
     return department.department;
   }
   catch (err) {
@@ -244,7 +256,7 @@ let findDepartment = async (res,id) => {
 // Teacher
 app.get("/teacher/:id/firstyear",async (req,res) => {
   let {id} = req.params;
-  let department = await findDepartment(res,id);
+  let department = await findDepartment(Teacher,res,id);
   let student = await findStudent(req,res, 1,department);
   let curriculum = await findCurriculum(req,res,1,department);
   res.render("teacher/firstyear", { curriculum, student });
@@ -252,7 +264,7 @@ app.get("/teacher/:id/firstyear",async (req,res) => {
 
 app.get("/teacher/:id/secondyear", async(req, res) => {
   let { id } = req.params;
-  let department = await findDepartment(res, id);
+  let department = await findDepartment(Teacher,res, id);
 
   let student = await findStudent(req, res, 2, department);
 
@@ -263,7 +275,7 @@ app.get("/teacher/:id/secondyear", async(req, res) => {
 
 app.get("/teacher/:id/thirdyear", async (req, res) => {
   let { id } = req.params;
-  let department = await findDepartment(res, id);
+  let department = await findDepartment(Teacher,res, id);
   let student = await findStudent(req, res, 3, department);
   let curriculum = await findCurriculum(req, res, 3, department);
   res.render("teacher/thirdyear", { curriculum, student });
@@ -271,7 +283,7 @@ app.get("/teacher/:id/thirdyear", async (req, res) => {
 
 app.get("/teacher/:id/fourthyear", async (req, res) => {
   let { id } = req.params;
-  let department = await findDepartment(res, id);
+  let department = await findDepartment(Teacher,res, id);
   let student = await findStudent(req, res, 4, department);
   let curriculum = await findCurriculum(req, res, 4, department);
   res.render("teacher/fourthyear", { curriculum, student });
