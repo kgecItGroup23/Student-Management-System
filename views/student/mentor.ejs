@@ -1,2 +1,110 @@
 <%- include('../includes/header0') %>
-<%- include('../includes/Student_Teacher/faculty') %>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+            integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <title>info</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            main {
+                position: relative;
+                top: 9.5vh;
+                /* padding: 10px; */
+            }
+
+            main h1 {
+                margin: 5px 0;
+                padding: 5px 15px;
+                background-color: var(--color4);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                color: var(--color1);
+            }
+
+            .faculty {
+                display: flex;
+                margin: 1rem;
+                border-bottom: 1px solid #ccc;
+            }
+
+            .faculty .profile-pic {
+                height: 4rem;
+                width: 4rem;
+                margin: 0.5rem;
+                margin-right: 1rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 3.5rem;
+                border: 2px solid var(--color5);
+                border-radius: 50%;
+                overflow: hidden;
+                color: var(--color5);
+                background-color: var(--color4);
+            }
+
+            .faculty .profile-pic i {
+                position: relative;
+                top: 5px;
+            }
+
+            .faculty .details {
+                /* background-color: yellow; */
+                margin: 0.5rem 0;
+            }
+
+            .faculty .details h2 {
+                font-size: 1.5rem;
+                margin-top: 0.5rem;
+                margin-bottom: 0.3rem;
+                color: var(--color1);
+            }
+
+            .faculty .details p {
+                /* padding-left: 1rem; */
+                font-size: 0.8rem;
+                color: gray;
+            }
+
+            a {
+                text-decoration: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <main>
+            <h1>Mentors Of Your Department</h1>
+            <ul>
+                <% teachers.forEach((teacher)=> { %>
+                    <li class="faculty">
+                        <div class="profile-pic">
+                            <img src="" alt="">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="details">
+                            <h2>
+                                <%= teacher.fullname %>
+                            </h2>
+                            <p>
+                                <%= teacher.designation %>
+                            </p>
+                        </div>
+                    </li>
+
+                    <% }) %>
+
+            </ul>
+        </main>
+    </body>
+
+    </html>

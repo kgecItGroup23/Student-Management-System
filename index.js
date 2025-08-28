@@ -125,6 +125,10 @@ app.post("/teacher", async (req, res) => {
   req.session.info = {
     id: user._id,
     fullname: user.fullname,
+    designation: user.designation,
+    gmail: user.gmail,
+    mobilenum: user.mobilenum,
+    department: user.department,
   };
 
   res.render("teacher/home", { info: req.session.info });
@@ -152,8 +156,8 @@ app.get("/student/:id/fees", async (req,res) => {
 
 app.get("/student/:id/infoupdate", async (req,res) => {
   let {id} = req.params;
-
-  res.render("student/infoupdate.ejs",{info : await getinfoById(Student,req,id)});
+  let student = await getinfoById(Student,req,res,id);
+  res.render("student/infoupdate.ejs",{student});
 })
 
 app.get("/student/:id/marks", async (req,res) => {
@@ -163,15 +167,15 @@ app.get("/student/:id/marks", async (req,res) => {
 })
 
 app.get("/student/:id/mentor", async (req,res) => {
-  let {id} = req.params;
-
-  res.render("student/mentor.ejs",{info : await getinfoById(Student,req,id)});
+  let { id } = req.params;
+  let department = await findDepartment(Student, res, id);
+  let teachers = await findTeacher(req, res, department);
+  res.render("student/mentor.ejs",{teachers});
 })
 
 app.get("/student/:id/papers", async (req,res) => {
   let {id} = req.params;
   let info = await getinfoById(Student, req, id)
-
   res.render("student/papers.ejs",{info});
 })
 
@@ -186,17 +190,7 @@ app.get("/student/:id/syllabus", async (req,res) => {
 
   res.render("student/syllabus.ejs",{info : await getinfoById(Student,req,id)});
 })
-let findStudent = async (req,res,x,dep) => {
-  try{
-    let students = await Student.find({ year: x , department: dep });
 
-    return students;
-  }
-  catch (err) {
-    console.log(err);
-    res.render("landingPage/errorpage.ejs");
-  }
-}
 
 app.get("/student/paper/:st/:pp",async (req,res) => {
   let { st, pp } = req.params;
@@ -206,8 +200,26 @@ app.get("/student/paper/:st/:pp",async (req,res) => {
   res.render("student/papers.ejs", { student, paper })
 })
 
+app.patch("/student/:id/infoupdate",async (req,res) => {
+  let {id} = req.params;
+  let {password,mobilenum,gmail} = req.body;
+  await Student.findByIdAndUpdate(id,{password : password, mobilenum : mobilenum, gmail : gmail});
+  res.redirect(`/student/${id}/infoupdate`);
+});
+
 // functions
 
+let findStudent = async (req, res, x, dep) => {
+  try {
+    let students = await Student.find({ year: x, department: dep });
+
+    return students;
+  }
+  catch (err) {
+    console.log(err);
+    res.render("landingPage/errorpage.ejs");
+  }
+}
 const findpaperbyId = async (req,res,pp) => {
    try{
      let paper = await Curriculum.findOne({ "papers._id": pp }, { papers: { $elemMatch: { _id: pp } } })  //  only matching paper return not the ehole curriculum 
@@ -243,10 +255,21 @@ let findCurriculum = async (req,res, x, dep) => {
 
 let findDepartment = async (Database,res,id) => {
   try {
-    let department = await Database.findById(id);
-    return department.department;
+    let data = await Database.findById(id);
+    return data.department;
   }
   catch (err) {
+    console.log(err);
+    res.render("landingPage/errorpage.ejs");
+  }
+}
+
+let findTeacher = async (req,res,dep) => {
+  try{
+    let teachers = Teacher.find({ department: dep })
+    return teachers;
+  }
+  catch(err){
     console.log(err);
     res.render("landingPage/errorpage.ejs");
   }
@@ -289,11 +312,15 @@ app.get("/teacher/:id/fourthyear", async (req, res) => {
   res.render("teacher/fourthyear", { curriculum, student });
 });
 
-app.get("/teacher/:id/analysis", (req, res) => {
+app.get("/teacher/:id/analysis",  (req, res) => {
+  
   res.render("teacher/analysis");
 });
-app.get("/teacher/:id/facultymembers", (req, res) => {
-  res.render("teacher/facultymember");
+app.get("/teacher/:id/facultymembers", async  (req, res) => {
+  let { id } = req.params;
+  let department = await findDepartment(Teacher, res, id);
+  let teachers = await findTeacher(req, res, department);
+  res.render("teacher/facultymember",{teachers});
 });
 app.get("/teacher/:id/info", (req, res) => {
   res.render("teacher/info");
@@ -303,6 +330,13 @@ app.get("/teacher/:id/students", (req, res) => {
 });
 app.get("/teacher/:id/routine", (req, res) => {
   res.render("teacher/routine");
+})
+app.get("/teacher/:id/view",async (req,res) => {
+  let {id} = req.params;
+  let teacher = await getinfoById(Teacher,req,res,id);
+  
+  res.render("teacher/viewSinglefaculty",{teacher});
+
 })
 
 

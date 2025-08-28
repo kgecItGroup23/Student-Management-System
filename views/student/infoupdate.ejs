@@ -4,11 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/landingPage/signup.css">
 </head>
 <body>
-    <%- include('../includes/header0') %>
-    <div class="home">
-        <%- include('../includes/student/navbar') %>
-    </div>
+    <form action="/student/<%= student.id %>/infoupdate?_method=PATCH" method="post">
+    
+        <div>
+            <label  for="fullname">Name</label>
+            <input value="<%= student.fullname %>" type="text" id="fullname" name="fullname" disabled>
+        </div>
+    
+        <div>
+            <label for="rollno">Roll No </label>
+            <input value="<%= student.rollno %>" type="number" id="rollno" name="rollno" disabled>
+        </div>
+
+        <div class="together">
+    
+            <div>
+                <label for="department">Department </label>
+                <input value="<%= student.department %>" type="text" id="department" name="department" disabled>
+            </div>
+    
+            <div>
+                <label for="year">Year </label>
+                <input value="<%= student.year %>" list="years" type="number" id="year" name="year" disabled>
+            </div>
+        </div>
+    
+    
+        <div>
+            <label for="gmail">Mail</label>
+            <input value="<%= student.gmail %>" type="text" id="gmail" name="gmail">
+        </div>
+    
+        <div>
+            <label for="mobilenum">Mobile Number </label>
+            <input value="<%= student.mobilenum %>" type="number" id="mobilenum" name="mobilenum">
+        </div>
+    
+    
+        <div>
+            <label for="password">Password </label>
+            <input value="<%= student.password %>" type="text" id="password" name="password">
+        </div>
+        </div>
+        <button>Submit</button>
+    </form>
 </body>
 </html>
