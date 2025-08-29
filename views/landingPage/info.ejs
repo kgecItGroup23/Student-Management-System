@@ -17,7 +17,7 @@
 
                 main {
                     position: relative;
-                    top: 23vh;
+                    top: 14.5vh;
                     /* padding: 10px; */
                 }
 
@@ -69,48 +69,48 @@
                     font-size: 0.8rem;
                     color: gray;
                 }
+                .hide{
+                    display: none;
+                }
             </style>
         </head>
 
         <body>
             <main>
-                <h1>Department of Chemistry</h1>
-                <ul>
-                    <li class="faculty">
-                        <div class="profile-pic">
-                            <img src="" alt="">
-                            <i class="fa-solid fa-user-tie"></i>
-                        </div>
-                        <div class="details">
-                            <h2>Uttam Das</h2>
-                            <p>HOD, phD(Chemistry)</p>
-                        </div>
-                    </li>
-                    <li class="faculty">
-                        <div class="profile-pic">
-                            <img src="" alt="">
-                            <i class="fa-solid fa-user-tie"></i>
-                        </div>
-                        <div class="details">
-                            <h2>Dr. Sefali Saha</h2>
-                            <p>Prefessor, phD(Chemistry)</p>
-                        </div>
-                    </li>
-                    <li class="faculty">
-                        <div class="profile-pic">
-                            <img src="" alt="">
-                            <i class="fa-solid fa-user-tie"></i>
-                        </div>
-                        <div class="details">
-                            <h2>Dr. Jatin Ghosh</h2>
-                            <p>Professor, phD(Chemistry)</p>
-                        </div>
-                    </li>
-                </ul>
+            
+            
+                
+                <div class="seementors">
+                    <% let dep ; %>
+                    <% teachers.forEach((teacher) => { %>
+                        <% if(dep !== teacher.department){ %>
+
+                            <h1 cls="heading">Mentors of <%= teacher.department %> Department</h1>
+                            <% dep=teacher.department %>
+                        <% }%>
+                            
+                        <ul>
+                            <li class="faculty">
+                                <div class="profile-pic">
+                                    <img src="" alt="">
+                                    <i class="fa-solid fa-user-tie"></i>
+                                </div>
+                                <div class="details">
+                                    <h2><%= teacher.fullname %></h2>
+                                    <p><%= teacher.department %></p>
+                                    <p class="designation"><%= teacher.designation %></p>
+                                    <p><%= teacher.gmail %></p>
+                                </div>
+                            </li>
+                        </ul>
+                    <% }) %>
+                </div>
+                
             </main>
+
         </body>
 
+
         </html>
-<%- include('../includes/header0') %>
-<%- include('../includes/header') %>
+
 

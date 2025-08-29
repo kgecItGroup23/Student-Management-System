@@ -52,8 +52,10 @@ app.get("/", (req,res) => {
 app.get("/courses", (req,res) => {
     res.render("landingPage/courses");
 })
-app.get("/info", (req,res) => {
-    res.render("landingPage/info");
+app.get("/info", async (req,res) => {
+  let teachers = await Teacher.find().sort({department : 1});
+  let totalteacher = await Teacher.countDocuments();
+  res.render("landingPage/info", { teachers, totalteacher });
 })
 app.get("/notices", async (req,res) => {
     let notices = await Notice.find().sort({ date: -1 });
