@@ -42,12 +42,13 @@
                 </p>
                 <ul>
                     <% data.papers.forEach((paper)=> {%>
-                        <li>
-                            <%= paper.paperName %>
-                        </li>
-                        <li>
-                            <%= paper.paperCode %>
-                        </li>
+                        <a href="/teacher/thirdyear/<%= paper._id %>">
+                            <li>
+                                <%= paper.paperName %>
+                                    <%= paper.paperCode %>
+                            </li>
+
+                        </a>
                         <% })%>
                             <hr>
                 </ul>

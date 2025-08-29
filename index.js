@@ -80,7 +80,8 @@ app.get("/teacher/signin", (req,res) => {
 app.post("/student/signup", async(req,res) => {
   let {fullname,rollno,address,year,course,department,mothername,fathername,gmail,mobilenum,birthdate,password} = req.body;
   try{
-    await Student.insertOne({fullname,rollno,address,year,course,department,mothername,fathername,gmail,mobilenum,birthdate,password});
+    await Student.create({ fullname, rollno, address, year, course, department, mothername, fathername, gmail, mobilenum, birthdate, password });
+
     res.render("landingPage/signinsucessful.ejs");
   }
   catch(err){
@@ -139,7 +140,7 @@ app.post("/teacher", async (req, res) => {
 // student
 app.get("/student/:id/notices", async (req,res) => {
   let {id} = req.params;
-  let info = await getinfoById(Student, req, id);
+  let info = await getinfoById(Student, req,res, id);
   let notices = await Notice.find().sort({ date: -1 });
   res.render("student/notices.ejs",{info, notices});
   
@@ -153,7 +154,7 @@ app.get("/student/:id/assignment", async (req,res) => {
 app.get("/student/:id/fees", async (req,res) => {
   let {id} = req.params;
 
-  res.render("student/fees.ejs",{info : await getinfoById(Student,req,id)});
+  res.render("student/fees.ejs",{info : await getinfoById(Student,req,res,id)});
 })
 
 app.get("/student/:id/infoupdate", async (req,res) => {
@@ -165,7 +166,7 @@ app.get("/student/:id/infoupdate", async (req,res) => {
 app.get("/student/:id/marks", async (req,res) => {
   let {id} = req.params;
 
-  res.render("student/marks.ejs",{info : await getinfoById(Student,req,id)});
+  res.render("student/marks.ejs",{info : await getinfoById(Student,req,res,id)});
 })
 
 app.get("/student/:id/mentor", async (req,res) => {
@@ -177,20 +178,20 @@ app.get("/student/:id/mentor", async (req,res) => {
 
 app.get("/student/:id/papers", async (req,res) => {
   let {id} = req.params;
-  let info = await getinfoById(Student, req, id)
+  let info = await getinfoById(Student, req, res, id)
   res.render("student/papers.ejs",{info});
 })
 
 app.get("/student/:id/routine", async (req,res) => {
   let {id} = req.params;
 
-  res.render("student/routine.ejs",{info : await getinfoById(Student,req,id)});
+  res.render("student/routine.ejs", { info: await getinfoById(Student, req, res,id)});
 })
 
 app.get("/student/:id/syllabus", async (req,res) => {
   let {id} = req.params;
 
-  res.render("student/syllabus.ejs",{info : await getinfoById(Student,req,id)});
+  res.render("student/syllabus.ejs",{info : await getinfoById(Student,req,res,id)});
 })
 
 
@@ -211,6 +212,24 @@ app.patch("/student/:id/infoupdate",async (req,res) => {
 
 // functions
 
+const findDepartmentByPaperId = async (res,paperId) => {
+  try {
+    const objectId = new mongoose.Types.ObjectId(paperId);
+
+    const result = await Curriculum.findOne(
+      { "papers._id": objectId },
+      { department: 1 }  // Only return department field
+    );
+
+  
+
+    return result.department;
+  } catch (err) {
+    res.render("landingPage/errorpage.ejs");
+
+  }
+};
+
 let findStudent = async (req, res, x, dep) => {
   try {
     let students = await Student.find({ year: x, department: dep });
@@ -224,7 +243,9 @@ let findStudent = async (req, res, x, dep) => {
 }
 const findpaperbyId = async (req,res,pp) => {
    try{
-     let paper = await Curriculum.findOne({ "papers._id": pp }, { papers: { $elemMatch: { _id: pp } } })  //  only matching paper return not the ehole curriculum 
+     const paperId = new mongoose.Types.ObjectId(pp);
+     let paper = await Curriculum.findOne({ "papers._id": paperId }, { papers: { $elemMatch: { _id: paperId } } })  //  only matching paper return not the ehole curriculum 
+     console.log(paper._id)
      return paper.papers[0];
    }
    catch(err){
@@ -268,7 +289,7 @@ let findDepartment = async (Database,res,id) => {
 
 let findTeacher = async (req,res,dep) => {
   try{
-    let teachers = Teacher.find({ department: dep })
+    let teachers = await Teacher.find({ department: dep })
     return teachers;
   }
   catch(err){
@@ -313,6 +334,42 @@ app.get("/teacher/:id/fourthyear", async (req, res) => {
   let curriculum = await findCurriculum(req, res, 4, department);
   res.render("teacher/fourthyear", { curriculum, student });
 });
+
+app.get("/teacher/firstyear/:id",async (req,res) => {
+  let {id} = req.params;
+  let paper = await findpaperbyId(req,res,id);
+  let department = await findDepartmentByPaperId(res, id);
+  let student = await findStudent(req, res, 1, department);
+  res.render("teacher/paper",{paper,student})
+ 
+});
+app.get("/teacher/secondyear/:id", async (req, res) => {
+  let { id } = req.params;
+  let paper = await findpaperbyId(req, res, id);
+  let department = await findDepartmentByPaperId(res, id);
+  let student = await findStudent(req, res, 1, department);
+  res.render("teacher/paper", { paper, student })
+
+});
+
+app.get("/teacher/thirdyear/:id", async (req, res) => {
+  let { id } = req.params;
+  let paper = await findpaperbyId(req, res, id);
+  let department = await findDepartmentByPaperId(res, id);
+  let student = await findStudent(req, res, 1, department);
+  res.render("teacher/paper", { paper, student })
+
+});
+
+app.get("/teacher/fourthyear/:id", async (req, res) => {
+  let { id } = req.params;
+  let paper = await findpaperbyId(req, res, id);
+  let department = await findDepartmentByPaperId(res, id);
+  let student = await findStudent(req, res, 1, department);
+  res.render("teacher/paper", { paper, student })
+
+});
+
 
 app.get("/teacher/:id/analysis",  (req, res) => {
   
