@@ -19,6 +19,12 @@
     </div>  
     <%= paper.paperName %>
     <%= paper.paperCode %>
+<hr>
+    <form action="/upload/announcement" method="post" enctype="multipart/form-data">
+        <label for="annoucementinput">Upload Annoucement</label>
+        <input type="file" id="annoucementinput" name="file"> 
+        <button type="submit">Add</button>
+    </form>
 
 </body>
 </html>

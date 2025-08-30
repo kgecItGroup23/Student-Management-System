@@ -10,6 +10,13 @@ import Notice from "./models/notice.js";
 import Curriculum from "./models/curriculum.js";
 import session from "express-session";
 import bodyParser from "body-parser";
+import { v2 as cloudinary } from "cloudinary"
+import fs from "fs"
+import multer from "multer";
+import upload from "./middlewares/upload.js";
+import uploadOnCloudinary from "./utils/uploadOnCloudinary.js";
+
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -80,7 +87,7 @@ app.get("/teacher/signin", (req,res) => {
 app.post("/student/signup", async(req,res) => {
   let {fullname,rollno,address,year,course,department,mothername,fathername,gmail,mobilenum,birthdate,password} = req.body;
   try{
-    await Student.create({ fullname, rollno, address, year, course, department, mothername, fathername, gmail, mobilenum, birthdate, password });
+    await Student.create({ fullname, rollno, year, course, department, gmail, mobilenum, password });
 
     res.render("landingPage/signinsucessful.ejs");
   }
@@ -347,7 +354,7 @@ app.get("/teacher/secondyear/:id", async (req, res) => {
   let { id } = req.params;
   let paper = await findpaperbyId(req, res, id);
   let department = await findDepartmentByPaperId(res, id);
-  let student = await findStudent(req, res, 1, department);
+  let student = await findStudent(req, res, 2, department);
   res.render("teacher/paper", { paper, student })
 
 });
@@ -356,7 +363,7 @@ app.get("/teacher/thirdyear/:id", async (req, res) => {
   let { id } = req.params;
   let paper = await findpaperbyId(req, res, id);
   let department = await findDepartmentByPaperId(res, id);
-  let student = await findStudent(req, res, 1, department);
+  let student = await findStudent(req, res, 3, department);
   res.render("teacher/paper", { paper, student })
 
 });
@@ -365,7 +372,7 @@ app.get("/teacher/fourthyear/:id", async (req, res) => {
   let { id } = req.params;
   let paper = await findpaperbyId(req, res, id);
   let department = await findDepartmentByPaperId(res, id);
-  let student = await findStudent(req, res, 1, department);
+  let student = await findStudent(req, res, 4, department);
   res.render("teacher/paper", { paper, student })
 
 });
@@ -397,6 +404,32 @@ app.get("/teacher/:id/view",async (req,res) => {
   res.render("teacher/viewSinglefaculty",{teacher});
 
 })
+
+
+
+app.post("/upload/:type", upload.single("file"), async (req, res) => {
+  try {
+    const { type } = req.params; // e.g., "profile", "assignment", "notice"
+    const localPath = req.file.path;
+    console.log(localPath)
+
+    const cloudRes = await cloudinary.uploader.upload(localPath, {
+      folder: type, // saves inside a Cloudinary folder
+      resource_type: "auto",
+    });
+
+    fs.unlinkSync(localPath);
+
+    res.json({
+      message: "File uploaded successfully",
+      type,
+      url: cloudRes.secure_url,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Upload failed");
+  }
+});
 
 
 
