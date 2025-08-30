@@ -209,6 +209,7 @@ body {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
 }
-a{
+.notice-column a{
     text-decoration: none;
+    color: var(--color5);
 }
