@@ -1,0 +1,173 @@
+ * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+ }
+
+ :root {
+     --color1: #371d41;
+     --color2: #9929EA;
+     --color3: #CC66DA;
+     --color4: #FAEB92;
+     --color5: #375fe7;
+     --color6: rgb(211, 233, 241);
+     --color7: rgb(95, 160, 184);
+ }
+
+ body {
+     font-family: Arial, sans-serif;
+     height: 100vh;
+     width: 100vw;
+     padding: 1rem;
+     /* text-align: center; */
+     overflow: hidden;
+ }
+
+ header {
+     width: 100%;
+     position: relative;
+     border-radius: 15px;
+     background-image: linear-gradient(#a8dece, #ebe8a5);
+     display: flex;
+     align-items: center;
+     padding: 2rem;
+     box-shadow: 0px 0px 5px gray;
+ }
+
+ header h1 {
+     color: white;
+     text-shadow: 0px 1px 3px var(--color1);
+     font-family: 'Poppins', sans-serif;
+     font-weight: 600;
+ }
+
+ .outercontainer {
+     width: 100%;
+     height: 82%;
+     margin-top: 1rem;
+     display: flex;
+     gap: 1rem;
+ }
+
+ .outercontainer .student {
+    width: 70%;
+     box-shadow: 0px 0px 3px gray;
+     background-color: var(--color6);
+     border-radius: 1rem;
+     overflow: hidden;
+ }
+
+ .student h1 {
+    padding: 5px;
+     color: white;
+     text-align: center;
+     background-color: var(--color2);
+     /* text-shadow: 0px 1px 2px white; */
+     font-family: 'Poppins', sans-serif;
+     font-weight: 600;
+ }
+
+ .student ul {
+     /* height: 90%; */
+     overflow-y: scroll;
+ }
+
+ .student ul::-webkit-scrollbar {
+     display: none;
+ }
+
+ .student ul li {
+     list-style: none;
+     padding: 1rem;
+     margin: 0 1rem;
+     border-bottom: 1px solid gray;
+ }
+
+ .student ul li {
+     list-style: none;
+     padding: 1rem;
+     margin: 0 1rem;
+     border-bottom: 1px solid gray;
+ }
+
+ .student ul li h2 {
+     font-size: 20px;
+     color: rgb(48, 55, 70);
+ }
+
+
+ .student ul li p {
+     color: rgb(71, 72, 82);
+ } 
+
+
+
+.outercontainer .curriculum {
+    width: 30%;
+    height: 74vh;
+    padding-left: 1rem;
+    border-left: 1px solid var(--color5);
+    overflow-y: scroll;
+}
+
+.curriculum::-webkit-scrollbar{
+    display: none;
+}
+.curriculum h2 {
+    border-bottom: 1px solid var(--color5);
+    text-align: center;
+    font-size: 3rem;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 800;
+    background-image: linear-gradient(90deg, var(--color2), var(--color5));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+.curriculum ul {
+    padding: 0 3rem;
+    list-style: none;
+}
+
+
+.curriculum ul .card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 4.5rem;
+    border-radius: 15px;
+    background-image: linear-gradient(#a8dece, #ebe8a5);
+    margin: 2rem 0;
+    padding-left: 1rem;
+    color: white;
+    position: relative;
+    box-shadow: 0px 0px 5px gray;
+    text-decoration: none;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border: 2px solid white;
+    border-radius: 13px;
+    pointer-events: none;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 0px 10px gray;
+}
+
+.card h3 {
+    font-family: monospace;
+    text-shadow: 0px 1px 1px var(--color1);
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+.card a {
+    text-decoration: none;
+}
