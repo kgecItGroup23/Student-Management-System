@@ -1,12 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/student/papers.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Document</title>
 </head>
+
 <body>
-    <h2><%=student.fullname  %></h2>
-    <h2><%=paper.paperName %></h2>
+    <div class="dashboard">
+        <div class="top-left">
+            <a href="#" class="account">
+                <div class="avatar">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <span>
+                    <%=student.fullname %>
+                </span>
+            </a>
+            <div class="paper">
+                <h1>
+                    <%=paper.paperName %>
+                </h1>
+            </div>
+        </div>
+        <div class="top-right">
+            <div class="container">
+                <div class="filled"></div>
+            </div>
+            <p><span>70%</span> syllabus complete</p>
+            <a href="#">View full syllabus here</a>
+        </div>
+        <div class="left-box">
+            <h1>Students</h1>
+            <ul class="students">
+                <li class="student">
+                    <h2>Student Name</h2>
+                    <p>roll number</p>
+                    <p>phone number</p>
+                </li>
+                <li class="student">
+                    <h2>Student Name</h2>
+                    <p>roll number</p>
+                    <p>phone number</p>
+                </li>
+            </ul>
+        </div>
+        <div class="middle-box">
+            <h1>Marks</h1>
+            <div class="marks">
+                <div class="field">
+                    <h2>ca1</h2>
+                    <div class="score">25</div>
+                </div>
+                <div class="field">
+                    <h2>ca2</h2>
+                    <div class="score">25</div>
+                </div>
+                <div class="field">
+                    <h2>sem</h2>
+                    <div class="score">70</div>
+                </div>
+                <div class="field">
+                    <h2>total</h2>
+                    <div class="score">100</div>
+                </div>
+            </div>
+        </div>
+        <div class="right-box">
+            <h2>Anouncement</h2>
+          <ul>
+            <li class="notice"><a href="#">Anouncement 4: Lorem ipsum dolor sit amet.</a></li>
+            <li class="notice"><a href="#">Anouncement 4: Lorem ipsum dolor sit amet.</a></li>
+            <li class="notice"><a href="#">Anouncement 4: Lorem ipsum dolor sit amet.</a></li>
+            <li class="notice"><a href="#">Anouncement 4: Lorem ipsum dolor sit amet.</a></li>
+          </ul>
+        </div>
+    </div>
 </body>
+
 </html>
