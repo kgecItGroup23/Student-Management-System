@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <style>
-    .card{
+    .cards{
         display: inline-block;
         border: 2px solid black;
         padding-left: 20px;
@@ -16,8 +19,17 @@
         color: black;
         
     }
+    .hide{
+        display: none;
+    }
+
 </style>
 <body>
+
+    <input type="text" id="searchbar" placeholder="Enter roll no or name">
+    <label for="searchbar"><i class="fa-solid fa-magnifying-glass"></i></label>
+
+
     <% let year; %>
     <% students.forEach((student) => { %>
         <% if (year !== student.year) { %>
@@ -31,11 +43,46 @@
             </h2>
             <% year = student.year %>
         <% } %>
-        <a href="/teacher/<%= student._id %>/singleview" class="card ">
-            <p><%= student.fullname %></p>
-            <p><%= student.rollno %></p>
+        <a href="/teacher/<%= student._id %>/singleview" class="cards ">
+            <p class="fullname"><%= student.fullname %></p>
+            <p class="rollno"><%= student.rollno %></p>
             <p><%= student.department %></p>
         </a>
     <% }) %>
+
+    <script>
+        let inp = document.querySelector("input");
+        let cards = document.querySelectorAll(".cards");
+        let heading = document.querySelectorAll("h2");
+
+        inp.addEventListener("input", () => {
+            
+            let val = inp.value.toLowerCase();
+            cards.forEach((card) => {
+                let name = card.querySelector('.fullname').innerText.toLowerCase();
+                let roll = card.querySelector('.rollno').innerText.toLowerCase();
+                let isContain = name.includes(val) || roll.includes(val);
+                card.classList.toggle("hide",!isContain);
+            })
+                
+                heading.forEach((h2) => {
+                    let nextCards = [];
+                    let el = h2.nextElementSibling;
+
+                    while (el  && el.tagName !== "H2") {
+                        if (el.classList.contains("cards")) {
+                            nextCards.push(el);
+                        }
+                        el = el.nextElementSibling;
+                    }
+
+                    let allHidden = nextCards.every(card => card.classList.contains("hide"));
+                    h2.classList.toggle("hide", allHidden);
+                })
+
+        })
+             
+        
+    </script>
 </body>
 </html>
