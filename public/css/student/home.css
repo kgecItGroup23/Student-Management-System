@@ -213,3 +213,6 @@ body {
     text-decoration: none;
     color: var(--color5);
 }
+a{
+    text-decoration: none;
+}

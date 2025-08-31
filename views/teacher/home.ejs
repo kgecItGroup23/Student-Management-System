@@ -25,7 +25,17 @@
             <div class="sidebar-box">
                 <ul>
                     <li><a href="/teacher/<%= info.id %>/facultymembers">Facutly Members</a></li>
-                    <li><a href="/teacher/<%= info.id %>/routine">Routine</a></li>
+                    <% let url = null; %>
+                    <% if(routine != null){ %>
+                        <% url = routine.url %>
+                    <% } %>
+                    <li><a href=<%= url %> download>Routine</a>
+                        <form action="/uploads/routine/<%= info.department %>" method="post" enctype="multipart/form-data">
+                            <label for="routine">Upload new</label>
+                            <input type="file" name="routine" id="routine">
+                            <button type="submit">Upload</button>
+                        </form>
+                    </li>
                     <li><a href="/teacher/<%= info.id %>/students">Students</a></li>
                     <li><a href="/teacher/<%= info.id %>/analysis">Stastical Analysis</a></li>
                     <li><a href="/teacher/<%= info.id %>/info">Info</a></li>

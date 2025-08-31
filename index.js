@@ -9,6 +9,7 @@ import Student from "./models/student.js";
 import Notice from "./models/notice.js";
 import Annoucement from "./models/annoucement.js";
 import Curriculum from "./models/curriculum.js";
+import Routine from "./models/routine.js";
 import Mark from "./models/marks.js";
 import session from "express-session";
 import bodyParser from "body-parser";
@@ -121,8 +122,11 @@ app.post("/student", async (req, res) => {
   let department = user.department;
   let year = user.year;
   let curriculum = await findCurriculum(req, res, year, department);
-
-  res.render("student/home", { info: req.session.info, curriculum });
+  let notices = await Notice.find();
+  let routine = await Routine.find({ department: user.department });
+  let routineDoc = routine.length > 0 ? routine[0] : null;
+  console.log("routine : " + routine)
+  res.render("student/home", { info: req.session.info, curriculum, notices, routine: routineDoc });
 });
 
 
@@ -144,8 +148,9 @@ app.post("/teacher", async (req, res) => {
     department: user.department,
   };
   const notices = await Notice.find(); 
-
-  res.render("teacher/home", { info: req.session.info ,Notice : notices});
+  let routine = await Routine.find({ department: user.department });
+  let routineDoc = routine.length > 0 ? routine[0] : null;
+  res.render("teacher/home", { info: req.session.info, Notice: notices, routine: routineDoc });
 });
 
 
@@ -418,7 +423,13 @@ app.post('/uploads/annoucement/:year/:id', annouceupload.single('annoucement'), 
   res.redirect(`/teacher/year/${year}/${id}`);
 })
 
-// notice Upload
+// routine Upload
+
+
+
+
+
+// notice upload
 
 const noticestorage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -431,10 +442,10 @@ const noticestorage = multer.diskStorage({
 
 const noticeupload = multer({ storage: noticestorage })
 
-app.post('/uploads/notice', noticeupload.single('notice'),async function (req, res, next) {
+app.post('/uploads/notice', noticeupload.single('notice'), async function (req, res, next) {
   // console.log(req.body);
   // console.log(req.file.path);
-  let {notice,title} = req.body;
+  let { notice, title } = req.body;
   let date = new Date().toLocaleString("en-IN")
   const newNotice = new Notice({
     url: `/uploads/notice/${req.file.filename}`,
@@ -444,6 +455,32 @@ app.post('/uploads/notice', noticeupload.single('notice'),async function (req, r
   await newNotice.save();
   res.redirect("/teacher")
 })
+
+// Route Upload
+const routinetorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/routine')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() +`${file.originalname}`)
+  }
+})
+
+const routineupload = multer({ storage: routinetorage })
+
+app.post('/uploads/routine/:dep', routineupload.single('routine'), async function (req, res, next) {
+  // console.log(req.body);
+  // console.log(req.file.path);
+  let { dep } = req.params;
+  await Routine.findOneAndDelete({department : dep});
+  const newroutine = new Routine({
+    url: `/uploads/routine/${req.file.filename}`,
+    department : dep,
+  });
+  await newroutine.save();
+  res.redirect("/teacher")
+})
+
 
 
 
