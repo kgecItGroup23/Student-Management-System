@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .card{
+        display: inline-block;
+        border: 2px solid black;
+        padding-left: 20px;
+        width: 10rem;
+        margin-right: 10px;
+        text-decoration: none;
+        color: black;
+        
+    }
+</style>
+<body>
+    <% let year; %>
+    <% students.forEach((student) => { %>
+        <% if (year !== student.year) { %>
+            <h2>
+                Students of 
+                <%= (student.year === "1") ? "1st year"
+                    : (student.year === "2") ? "2nd year"
+                    : (student.year === "3") ? "3rd year"
+                    : (student.year === "4") ? "4th year"
+                    : student.year + " year" %>
+            </h2>
+            <% year = student.year %>
+        <% } %>
+        <a href="/teacher/<%= student._id %>/singleview" class="card ">
+            <p><%= student.fullname %></p>
+            <p><%= student.rollno %></p>
+            <p><%= student.department %></p>
+        </a>
+    <% }) %>
+</body>
+</html>

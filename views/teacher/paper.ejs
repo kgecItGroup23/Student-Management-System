@@ -20,10 +20,17 @@
     <%= paper.paperName %>
     <%= paper.paperCode %>
 <hr>
-    <form action="/upload/announcement" method="post" enctype="multipart/form-data">
-        <label for="annoucementinput">Upload Annoucement</label>
-        <input type="file" id="annoucementinput" name="file"> 
-        <button type="submit">Add</button>
+    <ul>
+        <% annoucement.forEach((a)=> { %>
+            <li><a href=<%=a.url %> download><%=a.title %></a>
+                <% console.log(a.url) %>
+            <% }) %></li>
+    </ul>
+    <form action="/uploads/annoucement/<%=y %>/<%=paper._id%>" method="post" enctype="multipart/form-data">
+        <input type="file" name="annoucement" />
+        <label for="title">Enter your Annoucement</label>
+        <input type="text" id="title" name="title">
+        <button type="submit">Upload</button>
     </form>
 
 </body>

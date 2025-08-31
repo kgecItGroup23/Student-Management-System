@@ -38,16 +38,16 @@
         <div class="left-box">
             <h1>Students</h1>
             <ul class="students">
-                <li class="student">
-                    <h2>Student Name</h2>
-                    <p>roll number</p>
-                    <p>phone number</p>
-                </li>
-                <li class="student">
-                    <h2>Student Name</h2>
-                    <p>roll number</p>
-                    <p>phone number</p>
-                </li>
+                <% allstudent.forEach((student) => { %>
+                    <li class="student">
+                        <h3><%= student.fullname %>
+                            (<span><%= student.rollno %></span>)
+                        </h3>
+                        
+                        <p><%= student.mobilenum%></p>
+                    </li>
+                <% }) %>
+                
             </ul>
         </div>
         <div class="middle-box">

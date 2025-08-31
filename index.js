@@ -7,14 +7,13 @@ import methodOverride from "method-override";
 import Teacher from "./models/teacher.js";
 import Student from "./models/student.js";
 import Notice from "./models/notice.js";
+import Annoucement from "./models/annoucement.js";
 import Curriculum from "./models/curriculum.js";
+import Mark from "./models/marks.js";
 import session from "express-session";
 import bodyParser from "body-parser";
-import { v2 as cloudinary } from "cloudinary"
-import fs from "fs"
 import multer from "multer";
-import upload from "./middlewares/upload.js";
-import uploadOnCloudinary from "./utils/uploadOnCloudinary.js";
+import { log } from "console";
 
 
 
@@ -27,6 +26,7 @@ app.use(express.urlencoded({extended : true}));
 app.use(methodOverride("_method"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/uploads", express.static("uploads"));
 
 app.use(session({
   secret: 'your-secret-key',
@@ -85,7 +85,7 @@ app.get("/teacher/signin", (req,res) => {
 
 //signup page
 app.post("/student/signup", async(req,res) => {
-  let {fullname,rollno,address,year,course,department,mothername,fathername,gmail,mobilenum,birthdate,password} = req.body;
+  let {fullname,rollno,year,course,department,gmail,mobilenum,password} = req.body;
   try{
     await Student.create({ fullname, rollno, year, course, department, gmail, mobilenum, password });
 
@@ -125,13 +125,16 @@ app.post("/student", async (req, res) => {
   res.render("student/home", { info: req.session.info, curriculum });
 });
 
+
 // Teacher Authentication
 app.post("/teacher", async (req, res) => {
   let { username, password } = req.body;
+
   const user = await Teacher.findOne({ fullname: username, password });
   if (!user) {
     return res.redirect("/");
   }
+  
   req.session.info = {
     id: user._id,
     fullname: user.fullname,
@@ -140,9 +143,12 @@ app.post("/teacher", async (req, res) => {
     mobilenum: user.mobilenum,
     department: user.department,
   };
+  const notices = await Notice.find(); 
 
-  res.render("teacher/home", { info: req.session.info });
+  res.render("teacher/home", { info: req.session.info ,Notice : notices});
 });
+
+
 
 // student
 app.get("/student/:id/notices", async (req,res) => {
@@ -179,7 +185,7 @@ app.get("/student/:id/marks", async (req,res) => {
 app.get("/student/:id/mentor", async (req,res) => {
   let { id } = req.params;
   let department = await findDepartment(Student, res, id);
-  let teachers = await findTeacher(req, res, department);
+  let teachers = await findDatabydep(Teacher,req, res, department);
   res.render("student/mentor.ejs",{teachers});
 })
 
@@ -206,8 +212,9 @@ app.get("/student/paper/:st/:pp",async (req,res) => {
   let { st, pp } = req.params;
   let student = await getinfoById(Student, req, res, st);
   let paper = await findpaperbyId(req,res,pp);
-  
-  res.render("student/papers.ejs", { student, paper })
+  let year = student.year, department = student.department;
+  let allstudent = await findStudent(req, res, year,department);
+  res.render("student/papers.ejs", { student, paper, allstudent });
 })
 
 app.patch("/student/:id/infoupdate",async (req,res) => {
@@ -216,6 +223,7 @@ app.patch("/student/:id/infoupdate",async (req,res) => {
   await Student.findByIdAndUpdate(id,{password : password, mobilenum : mobilenum, gmail : gmail});
   res.redirect(`/student/${id}/infoupdate`);
 });
+
 
 // functions
 
@@ -261,10 +269,10 @@ const findpaperbyId = async (req,res,pp) => {
    }
   }
 
-const getinfoById = async (Student, req, res, id) => {
+const getinfoById = async (Databse, req, res, id) => {
   try {
-    const student = await Student.findById(id);
-    return student;
+    const user = await Databse.findById(id);
+    return user;
 
   } catch (err) {
     console.error(err.message);
@@ -294,10 +302,10 @@ let findDepartment = async (Database,res,id) => {
   }
 }
 
-let findTeacher = async (req,res,dep) => {
+let findDatabydep = async (Database,req,res,dep) => {
   try{
-    let teachers = await Teacher.find({ department: dep })
-    return teachers;
+    let user = await Database.find({ department: dep })
+    return user;
   }
   catch(err){
     console.log(err);
@@ -306,77 +314,10 @@ let findTeacher = async (req,res,dep) => {
 }
 
 
+
+
+
 // Teacher
-app.get("/teacher/:id/firstyear",async (req,res) => {
-  let {id} = req.params;
-  let department = await findDepartment(Teacher,res,id);
-  let student = await findStudent(req,res, 1,department);
-  let curriculum = await findCurriculum(req,res,1,department);
-  res.render("teacher/firstyear", { curriculum, student });
-});
-
-app.get("/teacher/:id/secondyear", async(req, res) => {
-  let { id } = req.params;
-  let department = await findDepartment(Teacher,res, id);
-
-  let student = await findStudent(req, res, 2, department);
-
-  let curriculum = await findCurriculum(req, res, 2, department);
-
-  res.render("teacher/secondyear", { curriculum, student });
-});
-
-app.get("/teacher/:id/thirdyear", async (req, res) => {
-  let { id } = req.params;
-  let department = await findDepartment(Teacher,res, id);
-  let student = await findStudent(req, res, 3, department);
-  let curriculum = await findCurriculum(req, res, 3, department);
-  res.render("teacher/thirdyear", { curriculum, student });
-});
-
-app.get("/teacher/:id/fourthyear", async (req, res) => {
-  let { id } = req.params;
-  let department = await findDepartment(Teacher,res, id);
-  let student = await findStudent(req, res, 4, department);
-  let curriculum = await findCurriculum(req, res, 4, department);
-  res.render("teacher/fourthyear", { curriculum, student });
-});
-
-app.get("/teacher/firstyear/:id",async (req,res) => {
-  let {id} = req.params;
-  let paper = await findpaperbyId(req,res,id);
-  let department = await findDepartmentByPaperId(res, id);
-  let student = await findStudent(req, res, 1, department);
-  res.render("teacher/paper",{paper,student})
- 
-});
-app.get("/teacher/secondyear/:id", async (req, res) => {
-  let { id } = req.params;
-  let paper = await findpaperbyId(req, res, id);
-  let department = await findDepartmentByPaperId(res, id);
-  let student = await findStudent(req, res, 2, department);
-  res.render("teacher/paper", { paper, student })
-
-});
-
-app.get("/teacher/thirdyear/:id", async (req, res) => {
-  let { id } = req.params;
-  let paper = await findpaperbyId(req, res, id);
-  let department = await findDepartmentByPaperId(res, id);
-  let student = await findStudent(req, res, 3, department);
-  res.render("teacher/paper", { paper, student })
-
-});
-
-app.get("/teacher/fourthyear/:id", async (req, res) => {
-  let { id } = req.params;
-  let paper = await findpaperbyId(req, res, id);
-  let department = await findDepartmentByPaperId(res, id);
-  let student = await findStudent(req, res, 4, department);
-  res.render("teacher/paper", { paper, student })
-
-});
-
 
 app.get("/teacher/:id/analysis",  (req, res) => {
   
@@ -385,15 +326,13 @@ app.get("/teacher/:id/analysis",  (req, res) => {
 app.get("/teacher/:id/facultymembers", async  (req, res) => {
   let { id } = req.params;
   let department = await findDepartment(Teacher, res, id);
-  let teachers = await findTeacher(req, res, department);
+  let teachers = await findDatabydep(Teacher,req, res, department);
   res.render("teacher/facultymember",{teachers});
 });
 app.get("/teacher/:id/info", (req, res) => {
   res.render("teacher/info");
 });
-app.get("/teacher/:id/students", (req, res) => {
-  res.render("teacher/students");
-});
+
 app.get("/teacher/:id/routine", (req, res) => {
   res.render("teacher/routine");
 })
@@ -404,32 +343,110 @@ app.get("/teacher/:id/view",async (req,res) => {
   res.render("teacher/viewSinglefaculty",{teacher});
 
 })
-
-
-
-app.post("/upload/:type", upload.single("file"), async (req, res) => {
-  try {
-    const { type } = req.params; // e.g., "profile", "assignment", "notice"
-    const localPath = req.file.path;
-    console.log(localPath)
-
-    const cloudRes = await cloudinary.uploader.upload(localPath, {
-      folder: type, // saves inside a Cloudinary folder
-      resource_type: "auto",
-    });
-
-    fs.unlinkSync(localPath);
-
-    res.json({
-      message: "File uploaded successfully",
-      type,
-      url: cloudRes.secure_url,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Upload failed");
-  }
+app.get("/teacher/:id/students", async (req, res) => {
+  let { id } = req.params;
+  let department = await findDepartment(Teacher, res, id);
+  let students = await findDatabydep(Student, req, res, department);
+  students.sort((a, b) => a.year - b.year);
+  let curriculum = await findDatabydep(Curriculum, req, res, department);
+  res.render("teacher/students", { students, Mark, curriculum });
 });
+app.get("/teacher/:id/singleview", async (req,res) => {
+  let { id } = req.params;
+  let s = await getinfoById(Student,req,res,id)
+  let department = s.department;
+  let students = await findDatabydep(Student, req, res, department);
+  let year = s.year;  
+  let curriculum = await findCurriculum(req, res, year, department);
+  res.render("teacher/viewSinglestudent", { students, Mark, curriculum ,year,s});
+})
+
+// papers
+app.get("/teacher/year/:year/:id", async (req, res) => {
+  let { year, id } = req.params;
+  let paper = await findpaperbyId(req, res, id);
+  let department = await findDepartmentByPaperId(res, id);
+  let student = await findStudent(req, res, parseInt(year), department);
+  let annoucement = await Annoucement.find({ papername : paper.paperName})
+  console.log(annoucement)
+  console.log(paper.paperName)
+  res.render("teacher/paper", { paper, student, y: parseInt(year), annoucement })
+
+});
+// year
+app.get("/teacher/:id/:year", async (req, res) => {
+  let { id, year } = req.params;
+  let department = await findDepartment(Teacher, res, id);
+  let student = await findStudent(req, res, parseInt(year), department);
+  let curriculum = await findCurriculum(req, res, parseInt(year), department);
+  res.render("teacher/year", { curriculum, student });
+});
+
+
+
+
+// file Uploads
+
+// annoucement upload
+
+const annoucementstorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/annoucement')
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}-${file.originalname}`)
+  }
+})
+
+const annouceupload = multer({ storage: annoucementstorage })
+
+app.post('/uploads/annoucement/:year/:id', annouceupload.single('annoucement'), async function (req, res, next) {
+  let {id,year} =req.params;
+  // console.log(req.body);
+  // console.log(req.file.path);
+  let { annoucement, title } = req.body;
+  let date = new Date().toLocaleString("en-IN")
+  let paper = await findpaperbyId(req,res,id);
+  const newnAnnoucement = new Annoucement({
+    url: `/uploads/annoucement/${req.file.filename}`,
+    title,
+    date,
+    papername: paper.paperName,
+  });
+  await newnAnnoucement.save();
+  // console.log(req.file.path)
+  res.redirect(`/teacher/year/${year}/${id}`);
+})
+
+// notice Upload
+
+const noticestorage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/notice')
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}-${file.originalname}`)
+  }
+})
+
+const noticeupload = multer({ storage: noticestorage })
+
+app.post('/uploads/notice', noticeupload.single('notice'),async function (req, res, next) {
+  // console.log(req.body);
+  // console.log(req.file.path);
+  let {notice,title} = req.body;
+  let date = new Date().toLocaleString("en-IN")
+  const newNotice = new Notice({
+    url: `/uploads/notice/${req.file.filename}`,
+    title,
+    date,
+  });
+  await newNotice.save();
+  res.redirect("/teacher")
+})
+
+
+
 
 
 

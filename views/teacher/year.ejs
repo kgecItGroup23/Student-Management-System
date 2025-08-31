@@ -25,8 +25,9 @@
                 <p><%= data.department%></p>
                 <p><%= data.semester%></p>
                 <ul>
-                    <% data.papers.forEach((paper)=> {%> 
-                        <a href="/teacher/firstyear/<%= paper._id %>">
+                    <% data.papers.forEach((paper,i)=> {%> 
+                        <% let year = Math.floor((data.semester+1)/2) %>
+                        <a href="/teacher/year/<%= year %>/<%= paper._id %>">
                             <li>
                                 <%= paper.paperName %>
                                 <%= paper.paperCode %>

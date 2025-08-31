@@ -42,29 +42,50 @@
             </div>
             <div class="content-grid">
                 <div class="left-column">
-                    
+                    <div class="notice">
+                        <ol>
+                            <% Notice.forEach((notice)=> { %>
+                                <li>
+                                   <a href=<%=notice.url %>  download><%= notice.title %></a>
+                                    <% console.log(notice.url ) %>
+                                    <span>
+                                        <%= notice.date %>
+                                    </span>
+                                </li>
+                                <% }) %>
+                        </ol>
+
+                        <hr>
+                        <form action="/uploads/notice" method="post" enctype="multipart/form-data">
+                            <input type="file" name="notice" />
+                            <label for="title">Title </label>
+                            <input type="text" id="title" name="title">
+                            <button type="submit">Add</button>
+                        </form>
+                        
+                    </div>
                 </div>
                 <div class="right-column">
                     <h2>Classes</h2>
                     <div class="classrooms">
                         <ul>
                             <li>
-                                <a class="card" href="/teacher/<%= info.id %>/firstyear">
+                                <a class="card" href="/teacher/<%= info.id %>/1">
                                     <div id="firstyear" class="year">First Year</div>
                                 </a>
                             </li>
                             <li>
-                                <a class="card" href="/teacher/<%= info.id %>/secondyear">
+                                <a class="card" href="/teacher/<%= info.id %>/2">
                                     <div id="secondyear" class="year">Second Year</div>
                                 </a>
                             </li>
                             <li>
-                                <a class="card" href="/teacher/<%= info.id %>/thirdyear">
+                                <a class="card" href="/teacher/<%= info.id %>/3">
                                     <div id="thirdyear" class="year">Third Year</div>
                                 </a>
                             </li>
                             <li>
-                                <a class="card" href="/teacher/<%= info.id %>/fourthyear">
+                                <a class="card" href="/teacher/<%= info.id %>/4">
                                     <div id="fourthyear" class="year">Fourth Year</div>
                                 </a>
                             </li>

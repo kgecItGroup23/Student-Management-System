@@ -4,6 +4,10 @@ let noticeschema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    title : {
+        type : String,
+        require : true,
+    },
     date : {
         type: String,
         required : true,

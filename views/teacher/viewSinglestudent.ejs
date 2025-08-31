@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="view">
+        <p><%=s.fullname  %></p>
+        <p><%=s.department  %></p>
+        <p><%=s.year  %></p>
+        <% curriculum.forEach((curr) => { %>
+            <% curr.papers.forEach((paper) => { %>
+                <p><%= paper.paperName %></p>
+                <p><%= paper.paperCode %></p>
+            <% }) %>
+        <% }) %>
+        
+    </div>
+
+</body>
+</html>
