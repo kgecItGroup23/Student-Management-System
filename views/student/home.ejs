@@ -32,7 +32,11 @@
       </div>
       <div class="sidebar-box">
         <ul>
-          <a href=""><li>Routine</li></a>
+          <% let url=null; %>
+          <% if(routine !=null){ %>
+            <% url=routine.url %>
+          <% } %>
+          <a href=<%= url %> download><li>Routine</li></a>
           <a href=""><li>Result</li></a>
           <a href="/student/<%= info.id %>/mentor"><li>Mentor</li></a>
           <a href="/student/<%= info.id %>/infoupdate"><li>Update info</li></a>
@@ -83,10 +87,11 @@
         <div class="notice-column">
           <h2>Notice</h2>
           <ul>
-            <li class="notice"><a href="#">notice 1: Lorem ipsum dolor sit amet.</a></li>
-            <li class="notice"><a href="#">notice 1: Lorem ipsum dolor sit amet.</a></li>
-            <li class="notice"><a href="#">notice 1: Lorem ipsum dolor sit amet.</a></li>
-            <li class="notice"><a href="#">notice 1: Lorem ipsum dolor sit amet.</a></li>
+            <% notices.forEach((notice) => { %>
+              <li class="notice"><a href=<%=notice.url %>>new notice: <%= notice.title %></a>
+                Date : <%= notice.date %></li>
+            <% }) %>
+            
           </ul>
         </div>
       </div>
