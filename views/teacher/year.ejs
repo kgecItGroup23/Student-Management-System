@@ -4,41 +4,45 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/teacher/year.css">
     <title>Document</title>
 </head>
 
 <body>
+    <header>
+        <h1>First Year</h1>
+    </header>
     <div class="outercontainer">
         <div class="student">
-            <% student.forEach((data)=> { %> 
-                <p><%= data.fullname%></p>
-                <p><%= data.year%></p>
-                <p><%= data.gmail%></p>
-                <p><%= data.mobilenum%></p>
-                <p><%= data.department%></p>
-                <p><%= data.rollno%></p>
-                <hr>
-            <%}) %>
+            <h1>Students</h1>
+            <ul>
+                <% student.forEach((data)=> { %> 
+                    <li>
+                        <h2><%= data.fullname%> ( <%= data.rollno%> )</h2>
+                        <p></p>
+                        <p>Year: <%= data.year%></p>
+                        <p>emial: <%= data.gmail%></p>
+                        <p>Phone no.: <%= data.mobilenum%></p>
+                    </li>
+                <%}) %>
+            </ul>
         </div>
         <div class="curriculum">
-            <% curriculum.forEach((data)=> { %> 
-                <p><%= data.department%></p>
-                <p><%= data.semester%></p>
-                <ul>
-                    <% data.papers.forEach((paper,i)=> {%> 
-                        <% let year = Math.floor((data.semester+1)/2) %>
-                        <a href="/teacher/year/<%= year %>/<%= paper._id %>">
-                            <li>
-                                <%= paper.paperName %>
-                                <%= paper.paperCode %>
-                            </li>
-                            
-                        </a>
-                <% })%>
-                <hr>
-                </ul>
-                
-            <%}) %>
+            <h2>Curriculum</h2>
+            <ul>
+                <% curriculum.forEach((data)=> { %> 
+                        <% data.papers.forEach((paper)=> {%> 
+                            <li class="card">
+                                <a href="/teacher/firstyear/<%= paper._id %>">
+                                    <p><%= data.semester%> semester</p>
+                                    <%= paper.paperName %>
+                                    <%= paper.paperCode %>
+                                </a>
+                            </li>  
+                    <% })%>
+                    
+                <%}) %>
+            </ul>
         </div>
     </div>
 </body>
