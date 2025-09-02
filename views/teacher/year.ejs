@@ -33,7 +33,8 @@
                 <% curriculum.forEach((data)=> { %> 
                         <% data.papers.forEach((paper)=> {%> 
                             <li class="card">
-                                <a href="/teacher/firstyear/<%= paper._id %>">
+                                <% let year=Math.floor((data.semester+1)/2) %>
+                                    <a href="/teacher/year/<%= year %>/<%= paper._id %>">
                                     <p><%= data.semester%> semester</p>
                                     <%= paper.paperName %>
                                     <%= paper.paperCode %>

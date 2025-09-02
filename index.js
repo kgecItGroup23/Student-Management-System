@@ -384,6 +384,7 @@ app.get("/teacher/:id/:year", async (req, res) => {
   let department = await findDepartment(Teacher, res, id);
   let student = await findStudent(req, res, parseInt(year), department);
   let curriculum = await findCurriculum(req, res, parseInt(year), department);
+  
   res.render("teacher/year", { curriculum, student });
 });
 
