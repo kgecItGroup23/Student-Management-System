@@ -95,9 +95,26 @@
     justify-content: space-between;
     align-items: center;
     height: 50px;
+  }
+ 
+
+.details input {
+  background: transparent;
+  border: none;
+  cursor: default;
 }
 
-#upgrade {
+.details input:focus {
+  outline: none;
+  /* border-bottom: 2px solid var(--color5); */
+}
+
+#submit{
+  margin-top: 10px;
+  /* display: none; */
+}
+
+#upgrade , #edit, #submit {
     background: lightblue;
     color: white;
     border: 2px solid var(--color5);
@@ -112,19 +129,20 @@
     box-shadow: 0 1px 3px var(--color5);
 }
 
-#upgrade:hover {
+#upgrade:hover , #edit:hover{
     background: var(--color5);
     transform: translateY(-2px);
 }
 
-#upgrade:active {
+#upgrade:active , #edit:active{
     background: blue;
     transform: translateY(0);
   }
 
  #remove {
   position: absolute;
-  bottom: 20%;
+  bottom: 10%;
+  right: 10%;
     background: #e63946;
     color: #fff;
     border: none;

@@ -4,69 +4,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
-      integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/css/teacher/viewSingleStudent.css">
     <title>Document</title>
 </head>
 
 <body>
 
-<div class="container">
-    <!-- Left Section -->
-    <div class="left">
-      <div class="profile">
-        <div class="avatar">
-          <i class="fa-solid fa-user-graduate"></i>
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left">
+            <div class="profile">
+                <div class="avatar">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <h1 class="name">
+                    <%=s.fullname %>
+                </h1>
+            </div>
+            <div class="details">
+                <ul>
+                    <form action="">
+                        <li><input type="text" readonly value="Department: <%=s.department %>"></li>
+                        <li><input type="text" readonly value="Year: <%=s.year %> ">
+                            <button type="button" id="upgrade">Upgrade</button>
+                        </li>
+                        <li><input type="text" readonly value="Roll no.: <%=s.rollno %>"></li>
+                        <li><input type="text" readonly value="Phone no.: <%=s.mobilenum %>"></li>
+                        <li><input type="text" readonly value="email: <%=s.gmail %>"></li>
+                        <button type="submit" id="submit">Save Changes</button>
+                    </form>
+                </ul>
+                <button type="button" id="edit">Edit detals</button>
+                <button type="button" id="remove">Remove Student</button>
+
+            </div>
         </div>
-        <h1 class="name">
-            <%=s.fullname %>
-        </h1>
-    </div>
-      <div class="details">
-        <ul>
-            <li>Department: <%=s.department %></li>
-            <li>Year: <%=s.year %> 
-                <button type="button" id="upgrade">Upgrade</button>
-            </li>
-            <li>Roll no.: <%=s.rollno %></li>
-            <li>Phone no.: <%=s.mobilenum %></li>
-            <li>email: <%=s.gmail %></li>
-        </ul>
-        <button type="button" id="remove">Remove Student</button>
 
-      </div>
+        <!-- Right Section -->
+        <div class="right">
+            <ul class="papers">
+                <% curriculum.forEach((curr)=> { %>
+                    <% curr.papers.forEach((paper)=> { %>
+                        <li class="card">
+                            <h2>
+                                <%= paper.paperName %>
+                            </h2>
+                            <p>
+                                <%= paper.paperCode %>
+                            </p>
+                            <ul>
+                                <li>ca1: 25</li>
+                                <li>ca2: 25</li>
+                                <li>sem: 70</li>
+                                <li>grade: O</li>
+                            </ul>
+                        </li>
+                        <% }) %>
+                            <% }) %>
+            </ul>
+        </div>
     </div>
-
-    <!-- Right Section -->
-    <div class="right">
-      <ul class="papers">
-            <% curriculum.forEach((curr)=> { %>
-                <% curr.papers.forEach((paper)=> { %>
-                    <li class="card">
-                        <h2>
-                            <%= paper.paperName %>
-                        </h2>
-                        <p>
-                            <%= paper.paperCode %>
-                        </p>
-                        <ul>
-                            <li>ca1: 25</li>
-                            <li>ca2: 25</li>
-                            <li>sem: 70</li>
-                            <li>grade: O</li>
-                        </ul>
-                    </li>
-                <% }) %>
-            <% }) %>
-        </ul>
-    </div>
-  </div>
 
 
 
