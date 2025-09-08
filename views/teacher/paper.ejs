@@ -1,37 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/teacher/paper.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Document</title>
 </head>
+
 <body>
-    <div class="student">
-        <% student.forEach((data)=> { %> 
-            <p><%= data.fullname%></p>
-            <p><%= data.year%></p>
-            <p><%= data.gmail%></p>
-            <p><%= data.mobilenum%></p>
-            <p><%= data.department%></p>
-            <p><%= data.rollno%></p>
-            <hr>
-        <%}) %>
-    </div>  
-    <%= paper.paperName %>
-    <%= paper.paperCode %>
-<hr>
-    <ul>
-        <% annoucement.forEach((a)=> { %>
-            <li><a href=<%=a.url %> download><%=a.title %></a>
-                <% console.log(a.url) %>
-            <% }) %></li>
-    </ul>
-    <form action="/uploads/annoucement/<%=y %>/<%=paper._id%>" method="post" enctype="multipart/form-data">
-        <input type="file" name="annoucement" />
-        <label for="title">Enter your Annoucement</label>
-        <input type="text" id="title" name="title">
-        <button type="submit">Upload</button>
-    </form>
+    <div class="dashboard">
+        <div class="top-left">
+            <a href="#" class="account">
+                <div class="avatar">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+                <span>
+                    teacher's name
+                </span>
+            </a>
+            <div class="paper">
+                <h1>
+                    <%=paper.paperName %>
+                </h1>
+                <h2>
+                    <%= paper.paperCode %>
+                </h2>
+            </div>
+        </div>
+        <div class="top-right">
+            <div class="container">
+                <div class="filled"></div>
+            </div>
+            <p><span>70</span>% syllabus complete</p>
+            <a href="#">View full syllabus here</a>
+        </div>
+        <div class="left-box">
+            <h1>Students</h1>
+            <ul class="students">
+                <% student.forEach((data)=> { %>
+                    <li class="student">
+                        <h3>
+                            <%= data.fullname%>
+                                (<span>
+                                    <%= data.rollno%>
+                                </span>)
+                        </h3>
+
+                        <p>Phone no.: <%= data.mobilenum%>
+                        </p>
+                        <p>email: <%= data.gmail%>
+                        </p>
+                    </li>
+                    <% }) %>
+
+            </ul>
+        </div>
+        <div class="middle-box">
+            <h1>Marks</h1>
+            <div class="marks">
+                <div class="field">
+                    <h2>ca1</h2>
+                    <div class="score">25</div>
+                </div>
+                <div class="field">
+                    <h2>ca2</h2>
+                    <div class="score">25</div>
+                </div>
+                <div class="field">
+                    <h2>sem</h2>
+                    <div class="score">70</div>
+                </div>
+                <div class="field">
+                    <h2>total</h2>
+                    <div class="score">100</div>
+                </div>
+            </div>
+        </div>
+        <div class="right-box">
+            <h2>Anouncement</h2>
+            <form action="/uploads/annoucement/<%=y %>/<%=paper._id%>" method="post" enctype="multipart/form-data" class="notice-form">
+                <input type="file" name="annoucement" />
+                <input type="text" id="title" name="title" placeholder="Enter your Annoucement">
+                <button type="submit">Upload</button>
+            </form>
+            <ul>
+                <% annoucement.forEach((a)=> { %>
+                    <li><a href=<%=a.url %> download><%=a.title %></a>
+                        <% console.log(a.url) %>
+                            <% }) %>
+                    </li>
+            </ul>
+        </div>
+    </div>
 
 </body>
+
 </html>
