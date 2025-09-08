@@ -1,124 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/teacher/paper.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+      integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Document</title>
+    <style>
+      .hide {
+        display: none;
+      }
+    </style>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <style>
-    .hide {
-      display: none;
-    }
-  </style>
-</head>
-
-<body>
-  <%= paper.paperName %>
-    <%= paper.paperCode %>
-      <hr />
-
-      <div class="student">
-        <% student.forEach((data, index)=> { %>
-          <p>
-            <%= data.fullname %>
-          </p>
-          <p>
-            <%= data.year %>
-          </p>
-          <p>
-            <%= data.gmail %>
-          </p>
-          <p>
-            <%= data.mobilenum %>
-          </p>
-          <p>
-            <%= data.department %>
-          </p>
-          <p>
-            <%= data.rollno %>
-          </p>
-
-          <div class="marks">
-            <% marks.forEach((mark)=> { %> <% if (mark.rollno==data.rollno) { %>
-                <p>
-                  <%= mark.ca1 %>
-                </p>
-                <p>
-                  <%= mark.ca2 %>
-                </p>
-                <p>
-                  <%= mark.final %>
-                </p>
-
-                <% if (mark.ca1 && mark.ca2 && mark.final) { %>
-                  <% let total = 5 + parseInt(mark.ca1) + parseInt(mark.ca2) + parseInt(mark.final); %>
-                  <p><%= total %></p>
-                    <% if (total>= 90) { %>
-                      <p>O</p>
-                      <% } else if (total>= 80) { %>
-                        <p>E</p>
-                        <% } else if (total>= 70) { %>
-                          <p>A</p>
-                          <% } else if (total>= 60) { %>
-                            <p>B</p>
-                            <% } else if (total>= 50) { %>
-                              <p>C</p>
-                              <% } else if (total>= 40) { %>
-                                <p>D</p>
-                                <% } else { %>
-                                  <p>F</p>
-                                  <% } %>
-                                  <hr>
-                                    <% } %>
-                                      <% } %>
-                                        <% }) %>
+  <body>
+    <div class="dashboard">
+      <!-- Teacher Info -->
+      <div class="top-left">
+        <a href="#" class="account">
+          <div class="avatar">
+            <i class="fa-solid fa-user-graduate"></i>
           </div>
-
-          <hr />
-          <button class="addmark">Add Marks</button>
-
-          <form action="/teacher/marks/<%= data.rollno %>/<%= paper.paperName %>/<%= paper._id %>" method="post"
-            class="hide odd" id="form-<%= index %>">
-            <label for="ca1">CA1</label>
-            <input type="number" id="ca1" name="ca1" />
-            <label for="ca2">CA2</label>
-            <input type="number" id="ca2" name="ca2" />
-            <label for="final">Final Exam</label>
-            <input type="number" id="final" name="final" />
-            <button>add</button>
-          </form>
-          <hr />
-          <% }) %>
+          <span>teacher's name</span>
+        </a>
+        <div class="paper">
+          <h1><%= paper.paperName %></h1>
+          <h2><%= paper.paperCode %></h2>
+        </div>
       </div>
 
-      <ul>
-        <% annoucement.forEach((a)=> { %>
-          <li>
-            <a href="<%=a.url %>" download>
-              <%=a.title %>
-            </a>
+      <!-- Syllabus Progress -->
+      <div class="top-right">
+        <div class="container">
+          <div class="filled"></div>
+        </div>
+        <p><span>70</span>% syllabus complete</p>
+        <a href="#">View full syllabus here</a>
+      </div>
+
+      <!-- Students -->
+      <div class="left-box">
+        <h1>Students</h1>
+        <ul class="students">
+          <% student.forEach((data, index)=> { %>
+          <li class="student">
+            <h3><%= data.fullname %> (<span> <%= data.rollno %> </span>)</h3>
+            <p>Year: <%= data.year %></p>
+            <p>Dept: <%= data.department %></p>
+            <p>Phone: <%= data.mobilenum %></p>
+            <p>Email: <%= data.gmail %></p>
+
+            <!-- Marks -->
+            <div class="marks">
+              <% marks.forEach((mark)=> { %> <% if (mark.rollno==data.rollno) {
+              %>
+              <p>CA1: <%= mark.ca1 %></p>
+              <p>CA2: <%= mark.ca2 %></p>
+              <p>Final: <%= mark.final %></p>
+
+              <% if (mark.ca1 && mark.ca2 && mark.final) { %> <% let total=5 +
+              parseInt(mark.ca1) + parseInt(mark.ca2) + parseInt(mark.final); %>
+              <p>Total: <%= total %></p>
+              <% if (total>= 90) { %>
+              <p>Grade: O</p>
+              <% } else if (total>= 80) { %>
+              <p>Grade: E</p>
+              <% } else if (total>= 70) { %>
+              <p>Grade: A</p>
+              <% } else if (total>= 60) { %>
+              <p>Grade: B</p>
+              <% } else if (total>= 50) { %>
+              <p>Grade: C</p>
+              <% } else if (total>= 40) { %>
+              <p>Grade: D</p>
+              <% } else { %>
+              <p>Grade: F</p>
+              <% } %> <% } %> <% } %> <% }) %>
+            </div>
+
+            <!-- Add Marks Form -->
+            <button class="addmark">Add Marks</button>
+            <form
+              action="/teacher/marks/<%= data.rollno %>/<%= paper.paperName %>/<%= paper._id %>"
+              method="post"
+              class="hide odd"
+              id="form-<%= index %>"
+            >
+              <label for="ca1">CA1</label>
+              <input type="number" id="ca1" name="ca1" />
+              <label for="ca2">CA2</label>
+              <input type="number" id="ca2" name="ca2" />
+              <label for="final">Final</label>
+              <input type="number" id="final" name="final" />
+              <button type="submit">Add</button>
+            </form>
           </li>
           <% }) %>
-      </ul>
+        </ul>
+      </div>
 
-      <form action="/uploads/annoucement/<%=y %>/<%=paper._id%>" method="post" enctype="multipart/form-data">
-        <input type="file" name="annoucement" />
-        <label for="title">Enter your Announcement</label>
-        <input type="text" id="title" name="title" />
-        <button type="submit">Upload</button>
-      </form>
+      <!-- Announcements -->
+      <div class="right-box">
+        <h2>Announcement</h2>
+        <form
+          action="/uploads/annoucement/<%=y %>/<%=paper._id%>"
+          method="post"
+          enctype="multipart/form-data"
+          class="notice-form"
+        >
+          <input type="file" name="annoucement" />
+          <input
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Enter your Announcement"
+          />
+          <button type="submit">Upload</button>
+        </form>
+        <ul>
+          <% annoucement.forEach((a)=> { %>
+          <li>
+            <a href="<%=a.url %>" download> <%=a.title %> </a>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
 
-      <script>
-        let buttons = document.querySelectorAll(".addmark");
-
-        buttons.forEach((btn, index) => {
-          btn.addEventListener("click", () => {
-            let form = document.querySelector(`#form-${index}`);
-            form.classList.remove("hide");
-            btn.classList.add("hide");
-          });
+    <!-- JS -->
+    <script>
+      let buttons = document.querySelectorAll(".addmark");
+      buttons.forEach((btn, index) => {
+        btn.addEventListener("click", () => {
+          let form = document.querySelector(`#form-${index}`);
+          form.classList.remove("hide");
+          btn.classList.add("hide");
         });
-      </script>
-</body>
-
+      });
+    </script>
+  </body>
 </html>
