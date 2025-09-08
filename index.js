@@ -206,11 +206,6 @@ app.get("/student/:id/routine", async (req,res) => {
   res.render("student/routine.ejs", { info: await getinfoById(Student, req, res,id)});
 })
 
-app.get("/student/:id/syllabus", async (req,res) => {
-  let {id} = req.params;
-
-  res.render("student/syllabus.ejs",{info : await getinfoById(Student,req,res,id)});
-})
 
 
 app.get("/student/paper/:st/:pp",async (req,res) => {
@@ -219,7 +214,8 @@ app.get("/student/paper/:st/:pp",async (req,res) => {
   let paper = await findpaperbyId(req,res,pp);
   let year = student.year, department = student.department;
   let allstudent = await findStudent(req, res, year,department);
-  res.render("student/papers.ejs", { student, paper, allstudent });
+  let annoucement = await Annoucement.find({ papername: paper.paperName })
+  res.render("student/papers.ejs", { student, paper, allstudent, annoucement });
 })
 
 app.patch("/student/:id/infoupdate",async (req,res) => {
@@ -373,9 +369,9 @@ app.get("/teacher/year/:year/:id", async (req, res) => {
   let department = await findDepartmentByPaperId(res, id);
   let student = await findStudent(req, res, parseInt(year), department);
   let annoucement = await Annoucement.find({ papername : paper.paperName})
-  console.log(annoucement)
-  console.log(paper.paperName)
-  res.render("teacher/paper", { paper, student, y: parseInt(year), annoucement })
+  let marks = await Mark.find({papername : paper.paperName});
+
+  res.render("teacher/paper", { paper, student, y: parseInt(year), annoucement,marks})
 
 });
 // year
@@ -386,6 +382,20 @@ app.get("/teacher/:id/:year", async (req, res) => {
   let curriculum = await findCurriculum(req, res, parseInt(year), department);
   
   res.render("teacher/year", { curriculum, student });
+});
+
+app.post("/teacher/marks/:rollno/:papername/:id",async (req,res) => {
+  let {rollno,papername,id} = req.params;
+  let {ca1,ca2,final} = req.body;
+  let student = await Student.find({rollno : rollno});
+  try{
+    await Mark.insertOne({rollno,ca1,ca2,final,papername});
+    res.redirect(`/teacher/year/${student[0].year}/${id}`);
+  }
+  catch(err){
+    console.log(err);
+    res.render("landingPage/errorpage.ejs");
+  }
 });
 
 
@@ -411,7 +421,7 @@ app.post('/uploads/annoucement/:year/:id', annouceupload.single('annoucement'), 
   // console.log(req.body);
   // console.log(req.file.path);
   let { annoucement, title } = req.body;
-  let date = new Date().toLocaleString("en-IN")
+  let date = new Date().toLocaleDateString("en-IN")
   let paper = await findpaperbyId(req,res,id);
   const newnAnnoucement = new Annoucement({
     url: `/uploads/annoucement/${req.file.filename}`,
@@ -424,7 +434,7 @@ app.post('/uploads/annoucement/:year/:id', annouceupload.single('annoucement'), 
   res.redirect(`/teacher/year/${year}/${id}`);
 })
 
-// routine Upload
+
 
 
 
@@ -447,7 +457,7 @@ app.post('/uploads/notice', noticeupload.single('notice'), async function (req, 
   // console.log(req.body);
   // console.log(req.file.path);
   let { notice, title } = req.body;
-  let date = new Date().toLocaleString("en-IN")
+  let date = new Date().toLocaleDateString("en-IN")
   const newNotice = new Notice({
     url: `/uploads/notice/${req.file.filename}`,
     title,

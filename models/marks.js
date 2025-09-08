@@ -4,10 +4,6 @@ let marksSchema = new mongoose.Schema({
         type :String,
         required : true
     },
-    semester: {
-        type: String,
-        required: true
-    },
     ca1 : {
         type : String,
     },
@@ -17,9 +13,9 @@ let marksSchema = new mongoose.Schema({
     final : {
         type : String,
     },
-    grade : {
+    papername : {
         type : String,
-    }
+    },
 });
 
 const Mark = mongoose.model("Mark", marksSchema);

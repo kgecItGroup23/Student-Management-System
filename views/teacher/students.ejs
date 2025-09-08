@@ -1,88 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Student List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
         integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<style>
-    .cards{
-        display: inline-block;
-        border: 2px solid black;
-        padding-left: 20px;
-        width: 10rem;
-        margin-right: 10px;
-        text-decoration: none;
-        color: black;
-        
-    }
-    .hide{
-        display: none;
-    }
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f7f9fc;
+            color: #333;
+        }
 
-</style>
+        /* Search bar */
+        .search-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        #searchbar {
+            padding: 10px 15px;
+            width: 280px;
+            border: 2px solid #007bff;
+            border-radius: 25px 0 0 25px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .search-container label {
+            background: #007bff;
+            padding: 10px 15px;
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            color: white;
+        }
+
+        .search-container i {
+            font-size: 16px;
+        }
+
+        /* Section heading */
+        h2 {
+            margin: 20px 0 15px;
+            font-size: 20px;
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+        }
+
+        /* Cards container */
+        .cards {
+            display: inline-block;
+            border: 1px solid #ddd;
+            background: white;
+            padding: 15px;
+            width: 180px;
+            margin: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: black;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cards:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            border-color: #007bff;
+        }
+
+        .cards p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .fullname {
+            font-weight: bold;
+            font-size: 16px;
+            color: #007bff;
+        }
+
+        .rollno {
+            font-style: italic;
+            color: #555;
+        }
+
+        /* Hide */
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+
 <body>
 
-    <input type="text" id="searchbar" placeholder="Enter roll no or name">
-    <label for="searchbar"><i class="fa-solid fa-magnifying-glass"></i></label>
-
+    <div class="search-container">
+        <input type="text" id="searchbar" placeholder="Enter roll no or name">
+        <label for="searchbar"><i class="fa-solid fa-magnifying-glass"></i></label>
+    </div>
 
     <% let year; %>
-    <% students.forEach((student) => { %>
-        <% if (year !== student.year) { %>
-            <h2>
-                Students of 
-                <%= (student.year === "1") ? "1st year"
-                    : (student.year === "2") ? "2nd year"
-                    : (student.year === "3") ? "3rd year"
-                    : (student.year === "4") ? "4th year"
-                    : student.year + " year" %>
-            </h2>
-            <% year = student.year %>
-        <% } %>
-        <a href="/teacher/<%= student._id %>/singleview" class="cards ">
-            <p class="fullname"><%= student.fullname %></p>
-            <p class="rollno"><%= student.rollno %></p>
-            <p><%= student.department %></p>
-        </a>
-    <% }) %>
+        <% students.forEach((student)=> { %>
+            <% if (year !==student.year) { %>
+                <h2>
+                    Students of
+                    <%= (student.year==="1" ) ? "1st year" : (student.year==="2" ) ? "2nd year" : (student.year==="3" )
+                        ? "3rd year" : (student.year==="4" ) ? "4th year" : student.year + " year" %>
+                </h2>
+                <% year=student.year %>
+                    <% } %>
+                        <a href="/teacher/<%= student._id %>/singleview" class="cards">
+                            <p class="fullname">
+                                <%= student.fullname %>
+                            </p>
+                            <p class="rollno">
+                                <%= student.rollno %>
+                            </p>
+                            <p>
+                                <%= student.department %>
+                            </p>
+                        </a>
+                        <% }) %>
 
-    <script>
-        let inp = document.querySelector("input");
-        let cards = document.querySelectorAll(".cards");
-        let heading = document.querySelectorAll("h2");
+                            <script>
+                                let inp = document.querySelector("input");
+                                let cards = document.querySelectorAll(".cards");
+                                let heading = document.querySelectorAll("h2");
 
-        inp.addEventListener("input", () => {
-            
-            let val = inp.value.toLowerCase();
-            cards.forEach((card) => {
-                let name = card.querySelector('.fullname').innerText.toLowerCase();
-                let roll = card.querySelector('.rollno').innerText.toLowerCase();
-                let isContain = name.includes(val) || roll.includes(val);
-                card.classList.toggle("hide",!isContain);
-            })
-                
-                heading.forEach((h2) => {
-                    let nextCards = [];
-                    let el = h2.nextElementSibling;
+                                inp.addEventListener("input", () => {
+                                    let val = inp.value.toLowerCase();
+                                    cards.forEach((card) => {
+                                        let name = card.querySelector('.fullname').innerText.toLowerCase();
+                                        let roll = card.querySelector('.rollno').innerText.toLowerCase();
+                                        let isContain = name.includes(val) || roll.includes(val);
+                                        card.classList.toggle("hide", !isContain);
+                                    });
 
-                    while (el  && el.tagName !== "H2") {
-                        if (el.classList.contains("cards")) {
-                            nextCards.push(el);
-                        }
-                        el = el.nextElementSibling;
-                    }
-
-                    let allHidden = nextCards.every(card => card.classList.contains("hide"));
-                    h2.classList.toggle("hide", allHidden);
-                })
-
-        })
-             
-        
-    </script>
+                                    heading.forEach((h2) => {
+                                        let nextCards = [];
+                                        let el = h2.nextElementSibling;
+                                        while (el && el.tagName !== "H2") {
+                                            if (el.classList.contains("cards")) {
+                                                nextCards.push(el);
+                                            }
+                                            el = el.nextElementSibling;
+                                        }
+                                        let allHidden = nextCards.every(card => card.classList.contains("hide"));
+                                        h2.classList.toggle("hide", allHidden);
+                                    });
+                                });
+                            </script>
 </body>
+
 </html>

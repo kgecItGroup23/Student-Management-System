@@ -88,8 +88,10 @@
           <h2>Notice</h2>
           <ul>
             <% notices.forEach((notice) => { %>
-              <li class="notice"><a href=<%=notice.url %>>new notice: <%= notice.title %></a>
-                Date : <%= notice.date %></li>
+              <li class="notice">
+                <a href=<%=notice.url%>>new notice: <%= notice.title %></a>
+                Date : <%= notice.date %>
+              </li>
             <% }) %>
             
           </ul>

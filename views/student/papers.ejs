@@ -74,10 +74,10 @@
         <div class="right-box">
             <h2>Anouncement</h2>
           <ul>
-            <li class="notice"><a href="#">Anouncement 4: Lorem ipsum dolor sit amet.</a></li>
-            <li class="notice"><a href="#">Anouncement 4: Lorem ipsum dolor sit amet.</a></li>
-            <li class="notice"><a href="#">Anouncement 4: Lorem ipsum dolor sit amet.</a></li>
-            <li class="notice"><a href="#">Anouncement 4: Lorem ipsum dolor sit amet.</a></li>
+            <% annoucement.forEach((a)=> { %>
+                <li><a href=<%=a.url %> download><%=a.title %> <span><%= a.date %></span> </a>
+                </li>
+            <% }) %>
           </ul>
         </div>
     </div>

@@ -7,10 +7,25 @@
     <link rel="stylesheet" href="/css/teacher/year.css">
     <title>Document</title>
 </head>
+<style>
+    .hide {
+        display: none;
+    }
+</style>
 
 <body>
     <header>
-        <h1>First Year</h1>
+        <% 
+            let year;
+            if(student[0].year == 1) year = 'First';
+            else if(student[0].year == 2) year = 'Second';
+            else if(student[0].year == 3) year = 'Third';
+            else year = 'Fourth';
+        %>
+
+
+
+        <h1><%= year %> Year</h1>
     </header>
     <div class="outercontainer">
         <div class="student">
@@ -32,14 +47,15 @@
             <ul>
                 <% curriculum.forEach((data)=> { %> 
                         <% data.papers.forEach((paper)=> {%> 
-                            <li class="card">
-                                <% let year=Math.floor((data.semester+1)/2) %>
-                                    <a href="/teacher/year/<%= year %>/<%= paper._id %>">
-                                    <p><%= data.semester%> semester</p>
-                                    <%= paper.paperName %>
-                                    <%= paper.paperCode %>
-                                </a>
-                            </li>  
+                            <% let year=Math.floor((data.semester+1)/2) %>
+                                <a href="/teacher/year/<%= year %>/<%= paper._id %>" class="card">
+                                <li >
+                                <p><%= data.semester%> semester</p>
+                                <%= paper.paperName %>
+                                <%= paper.paperCode %>
+                                </li>
+                            </a>
+                            
                     <% })%>
                     
                 <%}) %>
