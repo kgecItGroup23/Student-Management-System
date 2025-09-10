@@ -178,14 +178,35 @@ app.get("/student/:id/fees", async (req,res) => {
 app.get("/student/:id/infoupdate", async (req,res) => {
   let {id} = req.params;
   let student = await getinfoById(Student,req,res,id);
+  
   res.render("student/infoupdate.ejs",{student});
 })
+app.get("/student/:id/marks", async (req, res) => {
+  let { id } = req.params;
+  let student = await getinfoById(Student, req, res, id);
+  let year = student.year;
+  let dep = student.department;
 
-app.get("/student/:id/marks", async (req,res) => {
-  let {id} = req.params;
+  // Get curriculum papers for odd/even semester
+  let curriculum = await Curriculum.find({
+    $or: [
+      { semester: 2 * year - 1 },
+      { semester: 2 * year }
+    ],
+    department: dep
+  });
 
-  res.render("student/marks.ejs",{info : await getinfoById(Student,req,res,id)});
-})
+  let marks = [];
+  for (const sem of curriculum) {
+    for (const papers of sem.papers) {
+      let m = await Mark.find({papername : papers.paperName,rollno : student.rollno});
+      if(m) marks.push(m)
+    }
+  }
+
+  res.render("student/marks.ejs", { student, marks,curriculum });
+});
+
 
 app.get("/student/:id/mentor", async (req,res) => {
   let { id } = req.params;
@@ -214,8 +235,10 @@ app.get("/student/paper/:st/:pp",async (req,res) => {
   let paper = await findpaperbyId(req,res,pp);
   let year = student.year, department = student.department;
   let allstudent = await findStudent(req, res, year,department);
-  let annoucement = await Annoucement.find({ papername: paper.paperName })
-  res.render("student/papers.ejs", { student, paper, allstudent, annoucement });
+  let annoucement = await Annoucement.find({ papername: paper.paperName });
+  let marks = await Mark.find({papername : paper.paperName})
+  if ( marks == null) marks[0] = null;
+  res.render("student/papers.ejs", { student, paper, allstudent, annoucement,marks : marks[0] });
 })
 
 app.patch("/student/:id/infoupdate",async (req,res) => {
@@ -326,12 +349,16 @@ app.get("/teacher/:id/analysis",  (req, res) => {
 });
 app.get("/teacher/:id/facultymembers", async  (req, res) => {
   let { id } = req.params;
+  console.log("id : "+id)
   let department = await findDepartment(Teacher, res, id);
   let teachers = await findDatabydep(Teacher,req, res, department);
   res.render("teacher/facultymember",{teachers});
 });
-app.get("/teacher/:id/info", (req, res) => {
-  res.render("teacher/info");
+app.get("/teacher/:id/info", async (req, res) => {
+  let { id } = req.params;
+  let teacher = await getinfoById(Teacher,req,res,id)
+  console.log("teacher : " + teacher)
+  res.render("teacher/info",{teacher});
 });
 
 app.get("/teacher/:id/routine", (req, res) => {
@@ -352,15 +379,37 @@ app.get("/teacher/:id/students", async (req, res) => {
   let curriculum = await findDatabydep(Curriculum, req, res, department);
   res.render("teacher/students", { students, Mark, curriculum });
 });
+
 app.get("/teacher/:id/singleview", async (req,res) => {
   let { id } = req.params;
-  let s = await getinfoById(Student,req,res,id)
-  let department = s.department;
-  let students = await findDatabydep(Student, req, res, department);
-  let year = s.year;  
-  let curriculum = await findCurriculum(req, res, year, department);
-  res.render("teacher/viewSinglestudent", { students, Mark, curriculum ,year,s});
-})
+  let student = await getinfoById(Student, req, res, id);
+  let year = student.year;
+  let dep = student.department;
+
+  // Get curriculum papers for odd/even semester
+  let curriculum = await Curriculum.find({
+    $or: [
+      { semester: 2 * year - 1 },
+      { semester: 2 * year }
+    ],
+    department: dep
+  });
+
+  let marks = [];
+  for (const sem of curriculum) {
+    for (const papers of sem.papers) {
+      let m = await Mark.find({ papername: papers.paperName, rollno: student.rollno });
+      if (m.length > 0) {
+        marks.push(...m)
+        
+      }
+    }
+  }
+  // console.log("marks : "+marks)
+  res.render("teacher/viewSinglestudent", { s :student, marks, curriculum });
+});
+
+
 
 // papers
 app.get("/teacher/year/:year/:id", async (req, res) => {
@@ -368,7 +417,9 @@ app.get("/teacher/year/:year/:id", async (req, res) => {
   let paper = await findpaperbyId(req, res, id);
   let department = await findDepartmentByPaperId(res, id);
   let student = await findStudent(req, res, parseInt(year), department);
-  let annoucement = await Annoucement.find({ papername : paper.paperName})
+  let annoucement = await Annoucement.find({ papername: paper.paperName })
+
+  annoucement = annoucement.sort((a, b) => new Date(b.date) - new Date(a.date));
   let marks = await Mark.find({papername : paper.paperName});
 
   res.render("teacher/paper", { paper, student, y: parseInt(year), annoucement,marks})
@@ -396,6 +447,59 @@ app.post("/teacher/marks/:rollno/:papername/:id",async (req,res) => {
     console.log(err);
     res.render("landingPage/errorpage.ejs");
   }
+});
+
+app.patch("/teacher/:id/infoupdate", async (req, res) => {
+  let { id } = req.params;
+  let { password, mobilenum, gmail } = req.body;
+  await Teacher.findByIdAndUpdate(id, { password: password, mobilenum: mobilenum, gmail: gmail });
+  res.redirect("/teacher/home")
+
+});
+
+app.patch("/teacher/:id/singleview", async(req,res) => {
+  let{id} = req.params;
+  let {department,year,rollno,mobilenum,gmail} = req.body;
+  console.log(department)
+  console.log(year)
+  console.log(rollno)
+  console.log(mobilenum)
+  console.log(gmail)
+  await Student.findByIdAndUpdate( id , { department, year, rollno, mobilenum, gmail })
+  let student = await getinfoById(Student, req, res, id);
+  let dep = student.department;
+  year = parseInt(year);
+
+  // Get curriculum papers for odd/even semester
+  let curriculum = await Curriculum.find({
+    $or: [
+      { semester: 2 * year - 1 },
+      { semester: 2 * year }
+    ],
+    department: dep
+  });
+
+  let marks = [];
+  for (const sem of curriculum) {
+    for (const papers of sem.papers) {
+      let m = await Mark.find({ papername: papers.paperName, rollno: student.rollno });
+      if (m.length > 0) {
+        marks.push(...m)
+
+      }
+    }
+  }
+  // console.log("marks : "+marks)
+  res.render("teacher/viewSinglestudent", { s: student, marks, curriculum });
+});
+
+
+app.delete("/teacher/:id/singleview", async (req, res) => {
+  let { id } = req.params;
+  
+  let s = await Student.findByIdAndDelete(id)
+  console.log(s)
+  res.redirect("/teacher/home");
 });
 
 
@@ -434,6 +538,16 @@ app.post('/uploads/annoucement/:year/:id', annouceupload.single('annoucement'), 
   res.redirect(`/teacher/year/${year}/${id}`);
 })
 
+// teachet/home redirect
+app.get("/teacher/home", async (req, res) => {
+  if (!req.session.info) return res.redirect("/signin");  
+
+  const notices = await Notice.find();
+  let routine = await Routine.find({ department: req.session.info.department });
+  let routineDoc = routine.length > 0 ? routine[0] : null;
+
+  res.render("teacher/home", { info: req.session.info, Notice: notices, routine: routineDoc });
+});
 
 
 
@@ -464,7 +578,7 @@ app.post('/uploads/notice', noticeupload.single('notice'), async function (req, 
     date,
   });
   await newNotice.save();
-  res.redirect("/teacher")
+  res.redirect("/teacher/home")
 })
 
 // Route Upload
@@ -489,7 +603,8 @@ app.post('/uploads/routine/:dep', routineupload.single('routine'), async functio
     department : dep,
   });
   await newroutine.save();
-  res.redirect("/teacher")
+  res.redirect("/teacher/home")
+
 })
 
 

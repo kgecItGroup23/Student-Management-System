@@ -11,7 +11,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>Document</title>
+    <title>Teacher Dashboard</title>
     <style>
       .hide {
         display: none;
@@ -23,12 +23,6 @@
     <div class="dashboard">
       <!-- Teacher Info -->
       <div class="top-left">
-        <a href="#" class="account">
-          <div class="avatar">
-            <i class="fa-solid fa-user-graduate"></i>
-          </div>
-          <span>teacher's name</span>
-        </a>
         <div class="paper">
           <h1><%= paper.paperName %></h1>
           <h2><%= paper.paperCode %></h2>
@@ -65,8 +59,10 @@
               <p>Final: <%= mark.final %></p>
 
               <% if (mark.ca1 && mark.ca2 && mark.final) { %> <% let total=5 +
-              parseInt(mark.ca1) + parseInt(mark.ca2) + parseInt(mark.final); %>
+              Math.max(parseInt(mark.ca1), parseInt(mark.ca2)) +
+              parseInt(mark.final); %>
               <p>Total: <%= total %></p>
+
               <% if (total>= 90) { %>
               <p>Grade: O</p>
               <% } else if (total>= 80) { %>
@@ -109,7 +105,7 @@
       <div class="right-box">
         <h2>Announcement</h2>
         <form
-          action="/uploads/annoucement/<%=y %>/<%=paper._id%>"
+          action="/uploads/annoucement/<%= y %>/<%= paper._id %>"
           method="post"
           enctype="multipart/form-data"
           class="notice-form"
@@ -126,7 +122,9 @@
         <ul>
           <% annoucement.forEach((a)=> { %>
           <li>
-            <a href="<%=a.url %>" download> <%=a.title %> </a>
+            <a href="<%= a.url %>" download>
+              <%= a.title %> &nbsp;&nbsp;&nbsp; <%= a.date %>
+            </a>
           </li>
           <% }) %>
         </ul>

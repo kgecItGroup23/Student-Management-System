@@ -14,7 +14,7 @@
 
 <body>
 
-
+    
     <div class="container">
         <!-- Left Section -->
         <div class="left">
@@ -28,19 +28,21 @@
             </div>
             <div class="details">
                 <ul>
-                    <form action="">
-                        <li><input type="text" readonly value="Department: <%=s.department %>"></li>
-                        <li><input type="text" readonly value="Year: <%=s.year %> ">
-                            <button type="button" id="upgrade">Upgrade</button>
+                   
+                    <form action="/teacher/<%= s._id %>/singleview?_method=PATCH" method="post">
+                        <li><input type="text" readonly name="department" value="<%=s.department %>"></li>
+                        <li><input type="text" readonly name="year"value="<%=s.year %>">
                         </li>
-                        <li><input type="text" readonly value="Roll no.: <%=s.rollno %>"></li>
-                        <li><input type="text" readonly value="Phone no.: <%=s.mobilenum %>"></li>
-                        <li><input type="text" readonly value="email: <%=s.gmail %>"></li>
-                        <button type="submit" id="submit">Save Changes</button>
+                        <li><input type="text" readonly name="rollno"value="<%=s.rollno %>"></li>
+                        <li><input type="text" readonly name="mobilenum"value="<%=s.mobilenum %>"></li>
+                        <li><input type="text" readonly name="gmail"value="<%=s.gmail %>"></li>
+                        <button type="submit" style="display: none;" id="submit">Save Changes</button>
                     </form>
                 </ul>
                 <button type="button" id="edit">Edit detals</button>
-                <button type="button" id="remove">Remove Student</button>
+                <form action="/teacher/<%= s._id %>/singleview?_method=DELETE" method="POST" style="display:inline;">
+                    <button type="submit" id="remove">Remove Student</button>
+                </form>
 
             </div>
         </div>
@@ -49,27 +51,72 @@
         <div class="right">
             <ul class="papers">
                 <% curriculum.forEach((curr)=> { %>
-                    <% curr.papers.forEach((paper)=> { %>
-                        <li class="card">
-                            <h2>
-                                <%= paper.paperName %>
-                            </h2>
-                            <p>
-                                <%= paper.paperCode %>
-                            </p>
-                            <ul>
-                                <li>ca1: 25</li>
-                                <li>ca2: 25</li>
-                                <li>sem: 70</li>
-                                <li>grade: O</li>
-                            </ul>
-                        </li>
-                        <% }) %>
-                            <% }) %>
+  <% curr.papers.forEach((paper)=> { %>
+    <li class="card">
+      <h2><%= paper.paperName %></h2>
+      <p><%= paper.paperCode %></p>
+
+      <% 
+        let ca1 = "N/A", ca2 = "N/A", final = "N/A"; 
+        marks.forEach((m)=> {
+          if (m.papername == paper.paperName) {
+            ca1 = m.ca1;
+            ca2 = m.ca2;
+            final = m.final;
+          }
+        });
+
+        // calculate total = max(ca1, ca2) + final
+        let total = null;
+        if (ca1 !== "N/A" && ca2 !== "N/A" && final !== "N/A") {
+          total = Math.max(Number(ca1), Number(ca2)) + Number(final);
+        }
+
+        // grading system
+        let grade = "N/A";
+        if (total !== null) {
+          if (total >= 90) grade = "O";
+          else if (total >= 80) grade = "E";
+          else if (total >= 70) grade = "A";
+          else if (total >= 60) grade = "B";
+          else if (total >= 50) grade = "C";
+          else if (total >= 40) grade = "D";
+          else grade = "F";
+        }
+      %>
+
+      <ul>
+        <li>ca1: <%= ca1 %></li>
+        <li>ca2: <%= ca2 %></li>
+        <li>sem: <%= final %></li>
+        <li>grade: <%= grade %></li>
+      </ul>
+    </li>
+  <% }) %>
+<% }) %>
+
             </ul>
         </div>
     </div>
 
+
+    <script>
+        let edit = document.querySelector("#edit");
+        let inps = document.querySelectorAll("input");
+        let remove = document.querySelector("#remove");
+        let submit = document.querySelector("#submit");
+        edit.addEventListener("click", () => {
+           inps.forEach((inp) => {
+            inp.removeAttribute("readonly");
+           })
+           remove.setAttribute("style", "display : none;");
+           edit.setAttribute("style","display : none;");
+          submit.removeAttribute("style", "display");
+
+            
+        })
+        console.log("flag" + flag)
+    </script>
 
 
 

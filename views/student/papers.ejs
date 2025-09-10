@@ -19,15 +19,16 @@
                     <i class="fa-solid fa-user-graduate"></i>
                 </div>
                 <span>
-                    <%=student.fullname %>
+                    <%= student.fullname %>
                 </span>
             </a>
             <div class="paper">
                 <h1>
-                    <%=paper.paperName %>
+                    <%= paper.paperName %>
                 </h1>
             </div>
         </div>
+
         <div class="top-right">
             <div class="container">
                 <div class="filled"></div>
@@ -35,50 +36,92 @@
             <p><span>70</span>% syllabus complete</p>
             <a href="#">View full syllabus here</a>
         </div>
+
         <div class="left-box">
             <h1>Students</h1>
             <ul class="students">
-                <% allstudent.forEach((student) => { %>
+                <% allstudent.forEach((student)=> { %>
                     <li class="student">
-                        <h3><%= student.fullname %>
-                            (<span><%= student.rollno %></span>)
+                        <h3>
+                            <%= student.fullname %>
+                                (<span>
+                                    <%= student.rollno %>
+                                </span>)
                         </h3>
-                        
-                        <p><%= student.mobilenum%></p>
+                        <p>
+                            <%= student.mobilenum %>
+                        </p>
                     </li>
-                <% }) %>
-                
+                    <% }) %>
             </ul>
         </div>
+
         <div class="middle-box">
             <h1>Marks</h1>
             <div class="marks">
                 <div class="field">
                     <h2>ca1</h2>
-                    <div class="score">25</div>
+                    <div class="score">
+                        <%if(marks !=null && marks.ca1 !=null){ %>
+                            <%= marks.ca1 %>
+                                <% } %>
+                    </div>
                 </div>
                 <div class="field">
                     <h2>ca2</h2>
-                    <div class="score">25</div>
+                    <div class="score">
+                        <%if(marks !=null && marks.ca2 !=null){ %>
+                            <%= marks.ca2 %>
+                                <% } %>
+                    </div>
                 </div>
                 <div class="field">
                     <h2>sem</h2>
-                    <div class="score">70</div>
+                    <div class="score">
+                        <%if(marks !=null && marks.final !=null){ %>
+                            <%= marks.final %>
+                                <% } %>
+                    </div>
                 </div>
-                <div class="field">
-                    <h2>total</h2>
-                    <div class="score">100</div>
-                </div>
+                <% let grade='' ; let total; if (marks && marks.ca1 && marks.ca2 && marks.final) { let
+                    bestCA=Math.max(parseInt(marks.ca1), parseInt(marks.ca2)); total=5 + bestCA + parseInt(marks.final);
+                    if (total>= 90) grade = 'O';
+                    else if (total >= 80) grade = 'E';
+                    else if (total >= 70) grade = 'A';
+                    else if (total >= 60) grade = 'B';
+                    else if (total >= 50) grade = 'C';
+                    else if (total >= 40) grade = 'D';
+                    else grade = 'F';
+                    }
+                    %>
+                    <div class="field">
+                        <h2>Total</h2>
+                        <div class="score">
+                            <%= total %>
+                        </div>
+                    </div>
+                    <div class="field">
+                        <h2>Grade</h2>
+                        <div class="score">
+                            <%= grade %>
+                        </div>
+                    </div>
             </div>
         </div>
+
         <div class="right-box">
-            <h2>Anouncement</h2>
-          <ul>
-            <% annoucement.forEach((a)=> { %>
-                <li><a href=<%=a.url %> download><%=a.title %> <span><%= a.date %></span> </a>
-                </li>
-            <% }) %>
-          </ul>
+            <h2>Announcement</h2>
+            <ul>
+                <% annoucement.forEach((a)=> { %>
+                    <li>
+                        <a href="<%= a.url %>" download>
+                            <%= a.title %> <span>
+                                    <%= a.date %>
+                                </span>
+                        </a>
+                    </li>
+                    <% }) %>
+            </ul>
         </div>
     </div>
 </body>

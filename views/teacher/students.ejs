@@ -109,11 +109,11 @@
             <% if (year !==student.year) { %>
                 <h2>
                     Students of
-                    <%= (student.year==="1" ) ? "1st year" : (student.year==="2" ) ? "2nd year" : (student.year==="3" )
-                        ? "3rd year" : (student.year==="4" ) ? "4th year" : student.year + " year" %>
+                    <%= (student.year=="1" ) ? "1st year" : (student.year=="2" ) ? "2nd year" : (student.year=="3" )
+                        ? "3rd year" : (student.year=="4" ) ? "4th year" : student.year + " year" %>
                 </h2>
                 <% year=student.year %>
-                    <% } %>
+            <% } %>
                         <a href="/teacher/<%= student._id %>/singleview" class="cards">
                             <p class="fullname">
                                 <%= student.fullname %>

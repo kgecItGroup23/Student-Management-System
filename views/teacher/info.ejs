@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/landingPage/signup.css">
+</head>
+
+<body>
+    <form action="/teacher/<%= teacher._id %>/infoupdate?_method=PATCH" method="post">
+
+        <div>
+            <label for="fullname">Name</label>
+            <input value="<%= teacher.fullname %>" type="text" id="fullname" name="fullname" disabled>
+        </div>
+
+
+        <div class="together">
+
+            <div>
+                <label for="department">Department </label>
+                <input value="<%= teacher.department %>" type="text" id="department" name="department" disabled>
+            </div>
+
+            <div>
+                <label for="designation">Designation </label>
+                <input value="<%= teacher.designation %>" list="years" type="text" id="designation" name="designation" disabled>
+            </div>
+        </div>
+
+
+        <div>
+            <label for="gmail">Mail</label>
+            <input value="<%= teacher.gmail %>" type="text" id="gmail" name="gmail">
+        </div>
+
+        <div>
+            <label for="mobilenum">Mobile Number </label>
+            <input value="<%= teacher.mobilenum %>" type="number" id="mobilenum" name="mobilenum">
+        </div>
+
+
+        <div>
+            <label for="password">Password </label>
+            <input value="<%= teacher.password %>" type="text" id="password" name="password">
+        </div>
+        </div>
+        <button>Submit</button>
+    </form>
+</body>
+
+</html>

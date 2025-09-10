@@ -1,14 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Marks</title>
 </head>
+
 <body>
-    <%- include('../includes/header0') %>
-    <div class="home">
-        <%- include('../includes/student/navbar') %>
-    </div>
+    <h1><%=student.fullname  %></h1>
+    <% marks.forEach((markArray)=> { %>
+        <% markArray.forEach((paper)=> { %>
+            <div class="middle-box">
+                <h1>
+                    <%= paper.papername %>
+                </h1>
+                <div class="marks">
+                    <div class="field">
+                        <h2>ca1</h2>
+                        <div class="score">
+                            <%= paper?.ca1 ?? "" %>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <h2>ca2</h2>
+                        <div class="score">
+                            <%= paper?.ca2 ?? "" %>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <h2>sem</h2>
+                        <div class="score">
+                            <%= paper?.final ?? "" %>
+                        </div>
+                    </div>
+
+                    <% let grade='' ; let total=null; if (paper.ca1 && paper.ca2 && paper.final) { let
+                        bestCA=Math.max(parseInt(paper.ca1), parseInt(paper.ca2)); total=5 + bestCA +
+                        parseInt(paper.final); if (total>= 90) grade = 'O';
+                        else if (total >= 80) grade = 'E';
+                        else if (total >= 70) grade = 'A';
+                        else if (total >= 60) grade = 'B';
+                        else if (total >= 50) grade = 'C';
+                        else if (total >= 40) grade = 'D';
+                        else grade = 'F';
+                        }
+                        %>
+
+                        <div class="field">
+                            <h2>Total</h2>
+                            <div class="score">
+                                <%= total ?? "" %>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <h2>Grade</h2>
+                            <div class="score">
+                                <%= grade %>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <% }) %>
+                <% }) %>
 </body>
+
 </html>
